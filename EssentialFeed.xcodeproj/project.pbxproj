@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		85824C722CDA49C1005D5D19 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85824C672CDA49C1005D5D19 /* EssentialFeed.framework */; };
+		85824C9E2CE0D435005D5D19 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85824C672CDA49C1005D5D19 /* EssentialFeed.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		85824C732CDA49C1005D5D19 /* PBXContainerItemProxy */ = {
+		85824C9F2CE0D435005D5D19 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 85824C5E2CDA49C1005D5D19 /* Project object */;
 			proxyType = 1;
@@ -22,7 +22,7 @@
 
 /* Begin PBXFileReference section */
 		85824C672CDA49C1005D5D19 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		85824C712CDA49C1005D5D19 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		85824C9A2CE0D435005D5D19 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -44,7 +44,7 @@
 			path = EssentialFeed;
 			sourceTree = "<group>";
 		};
-		85824C752CDA49C1005D5D19 /* EssentialFeedTests */ = {
+		85824C9B2CE0D435005D5D19 /* EssentialFeedTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = EssentialFeedTests;
 			sourceTree = "<group>";
@@ -59,11 +59,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85824C6E2CDA49C1005D5D19 /* Frameworks */ = {
+		85824C972CE0D435005D5D19 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85824C722CDA49C1005D5D19 /* EssentialFeed.framework in Frameworks */,
+				85824C9E2CE0D435005D5D19 /* EssentialFeed.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				85824C692CDA49C1005D5D19 /* EssentialFeed */,
-				85824C752CDA49C1005D5D19 /* EssentialFeedTests */,
+				85824C9B2CE0D435005D5D19 /* EssentialFeedTests */,
 				85824C682CDA49C1005D5D19 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,7 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				85824C672CDA49C1005D5D19 /* EssentialFeed.framework */,
-				85824C712CDA49C1005D5D19 /* EssentialFeedTests.xctest */,
+				85824C9A2CE0D435005D5D19 /* EssentialFeedTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,27 +124,27 @@
 			productReference = 85824C672CDA49C1005D5D19 /* EssentialFeed.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		85824C702CDA49C1005D5D19 /* EssentialFeedTests */ = {
+		85824C992CE0D435005D5D19 /* EssentialFeedTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 85824C7F2CDA49C1005D5D19 /* Build configuration list for PBXNativeTarget "EssentialFeedTests" */;
+			buildConfigurationList = 85824CA12CE0D435005D5D19 /* Build configuration list for PBXNativeTarget "EssentialFeedTests" */;
 			buildPhases = (
-				85824C6D2CDA49C1005D5D19 /* Sources */,
-				85824C6E2CDA49C1005D5D19 /* Frameworks */,
-				85824C6F2CDA49C1005D5D19 /* Resources */,
+				85824C962CE0D435005D5D19 /* Sources */,
+				85824C972CE0D435005D5D19 /* Frameworks */,
+				85824C982CE0D435005D5D19 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				85824C742CDA49C1005D5D19 /* PBXTargetDependency */,
+				85824CA02CE0D435005D5D19 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				85824C752CDA49C1005D5D19 /* EssentialFeedTests */,
+				85824C9B2CE0D435005D5D19 /* EssentialFeedTests */,
 			);
 			name = EssentialFeedTests;
 			packageProductDependencies = (
 			);
 			productName = EssentialFeedTests;
-			productReference = 85824C712CDA49C1005D5D19 /* EssentialFeedTests.xctest */;
+			productReference = 85824C9A2CE0D435005D5D19 /* EssentialFeedTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -160,7 +160,7 @@
 					85824C662CDA49C1005D5D19 = {
 						CreatedOnToolsVersion = 16.0;
 					};
-					85824C702CDA49C1005D5D19 = {
+					85824C992CE0D435005D5D19 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
@@ -180,7 +180,7 @@
 			projectRoot = "";
 			targets = (
 				85824C662CDA49C1005D5D19 /* EssentialFeed */,
-				85824C702CDA49C1005D5D19 /* EssentialFeedTests */,
+				85824C992CE0D435005D5D19 /* EssentialFeedTests */,
 			);
 		};
 /* End PBXProject section */
@@ -193,7 +193,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85824C6F2CDA49C1005D5D19 /* Resources */ = {
+		85824C982CE0D435005D5D19 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -210,7 +210,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		85824C6D2CDA49C1005D5D19 /* Sources */ = {
+		85824C962CE0D435005D5D19 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -220,10 +220,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		85824C742CDA49C1005D5D19 /* PBXTargetDependency */ = {
+		85824CA02CE0D435005D5D19 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 85824C662CDA49C1005D5D19 /* EssentialFeed */;
-			targetProxy = 85824C732CDA49C1005D5D19 /* PBXContainerItemProxy */;
+			targetProxy = 85824C9F2CE0D435005D5D19 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -416,7 +416,7 @@
 			};
 			name = Release;
 		};
-		85824C802CDA49C1005D5D19 /* Debug */ = {
+		85824CA22CE0D435005D5D19 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -430,7 +430,7 @@
 			};
 			name = Debug;
 		};
-		85824C812CDA49C1005D5D19 /* Release */ = {
+		85824CA32CE0D435005D5D19 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -465,11 +465,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		85824C7F2CDA49C1005D5D19 /* Build configuration list for PBXNativeTarget "EssentialFeedTests" */ = {
+		85824CA12CE0D435005D5D19 /* Build configuration list for PBXNativeTarget "EssentialFeedTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				85824C802CDA49C1005D5D19 /* Debug */,
-				85824C812CDA49C1005D5D19 /* Release */,
+				85824CA22CE0D435005D5D19 /* Debug */,
+				85824CA32CE0D435005D5D19 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
