@@ -138,8 +138,7 @@ class RemoteFeedLoaderTests: XCTestCase {
     
     private func makeItem(
         id: UUID,
-        description:
-        String? = nil,
+        description: String? = nil,
         location: String? = nil,
         imageURL: URL
     ) -> (model: FeedItem, json: [String : Any]) {
