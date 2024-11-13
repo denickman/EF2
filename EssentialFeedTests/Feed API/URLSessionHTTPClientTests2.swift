@@ -19,6 +19,24 @@ class URLSessionHTTPClientTests: XCTestCase {
         URLProtocolStub.stopInterceptingRequest()
     }
     
+    func test_getFromURL_performGETRequestWithURL() {
+        let url = anyURL()
+        let exp = expectation(description: "Wait for response")
+        
+        URLProtocolStub.observeRequests { request in
+            XCTAssertEqual(request.url, url)
+            XCTAssertEqual(request.httpMethod, "GET")
+            exp.fulfill()
+        }
+        
+        // here is causing the race condition because teadDown works on main thread, while this request works on background
+        makeSUT().get(from: url) { _ in
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 2.0) // with 1 does not work
+    }
+    
     func test_getFromURL_failsOnRequestError() {
         let requestError = anyNSError()
         let receivedError = resultErrorFor(data: nil, response: nil, error: requestError) as? NSError
@@ -211,7 +229,6 @@ class URLSessionHTTPClientTests: XCTestCase {
         // MARK: - URLProtocol
         
         override class func canInit(with request: URLRequest) -> Bool {
-            requestObserver?(request)
             return true
         }
         
@@ -221,6 +238,13 @@ class URLSessionHTTPClientTests: XCTestCase {
         
         override func startLoading() {
             
+            // Finish url loading when observing requests to make sure all url requests are finished before the test method returns.
+            // this way, we prevent data races with threads living longer than the test method that initiated them
+            if let requestObserver = URLProtocolStub.requestObserver {
+                client?.urlProtocolDidFinishLoading(self)
+                return requestObserver(request)
+            }
+
             if let data = URLProtocolStub.stub?.data {
                 client?.urlProtocol(self, didLoad: data)
             }
