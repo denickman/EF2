@@ -1,0 +1,41 @@
+
+name: CI
+
+# Controls when the action will run.
+# Triggers the workflow on specific pull request events.
+on:
+  push:
+    branches:
+      - main
+     # - feature/image-feed/cache-feed-use-case
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build-and-test"
+  build-and-test:
+    # The type of runner that the job will run on
+    runs-on: macos-14
+
+    timeout-minutes: 5
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.0.app
+
+      - name: Build and Test
+        run: xcodebuild test -project EssentialFeed.xcodeproj -scheme "EssentialFeed" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO #SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
+        
+      - name: Build and Test
+        run: xcodebuild test -workspace EssentialApp.xcworkspace -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO #SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
+       
+      # - name: Setup Simulator
+      #   run: |
+      #       sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
+      #       sudo ln -s /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 16.4.simruntime
+      #       xcrun simctl list runtimes
+      #       xcrun simctl create "iPhone 12" com.apple.CoreSimulator.SimDeviceType.iPhone-12 com.apple.CoreSimulator.SimRuntime.iOS-16-4
+      #       xcrun simctl list devices 16.4
