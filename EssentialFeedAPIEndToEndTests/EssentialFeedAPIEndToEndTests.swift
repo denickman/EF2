@@ -8,17 +8,76 @@
 import XCTest
 import EssentialFeed
 
+
+// CI run test example
 // Launch via terminal
 //  xcodebuild clean build test -project EssentialFeed.xcodeproj -scheme "EssentialFeed" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
 
+// we should avoid this state because artifacts that was appeared due to run the test can influenct the future test
+// 1. run end to end test 2. see cache 3. turn off wi-fi 4. run again - it passes due to stored cache!!!
+// /Users/{your-user-name}/Library/Caches/com.apple.dt.xctest.tool
+
+
+/*
+ URLRequest.cachePolicy = .useProtocolCachePolicy (по умолчанию):
+ Политика следует инструкциям сервера (включая Cache-Control).
+ Если данные всё ещё актуальны (меньше max-age), они будут взяты из кэша.
+ 
+ URLRequest.cachePolicy = .reloadIgnoringLocalCacheData:
+ Кэш полностью игнорируется, данные всегда запрашиваются с сервера, независимо от Cache-Control.
+ 
+ URLRequest.cachePolicy = .returnCacheDataDontLoad:
+ Используются только кэшированные данные. Если их нет или они устарели — возвращается ошибка.
+ */
+
 final class EssentialFeedAPIEndToEndTests: XCTestCase {
     
+    // 10 MB - 10 * 1024 * 1024
+    
+//    func demo() {
+//        let cache = URLCache(memoryCapacity: 10 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
+//        let config = URLSessionConfiguration.default
+//        config.urlCache = cache
+//        config.requestCachePolicy = .reloadIgnoringLocalCacheData // будет всегда загружать данные с сервера, даже если они уже есть в кэше.
+//        let session = URLSession(configuration: config)
+//        
+//        let url = URL(string: "http://any-url.com")!
+//        let request = URLRequest(url: url, cachePolicy: .returnCacheDataDontLoad, timeoutInterval: 30)
+//        
+//        
+//        URLCache.shared = cache
+//    }
+    
     func test_endToEndTestServerGETFeedResult_matchesFixedTestAccountData() {
-        let client = URLSessionHTTPClient()
-        let url = URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
+        switch getFeedResult() {
+        case let .success(items)?:
+            XCTAssertEqual(items.count, 8, "Expected 8 items in the test account feed")
+            XCTAssertEqual(items[0], exptctedItem(at: 0))
+            XCTAssertEqual(items[1], exptctedItem(at: 1))
+            XCTAssertEqual(items[2], exptctedItem(at: 2))
+            XCTAssertEqual(items[3], exptctedItem(at: 3))
+            XCTAssertEqual(items[4], exptctedItem(at: 4))
+            XCTAssertEqual(items[5], exptctedItem(at: 5))
+            XCTAssertEqual(items[6], exptctedItem(at: 6))
+            XCTAssertEqual(items[7], exptctedItem(at: 7))
+            
+        case let .failure(error)?:
+            XCTFail("Expected successful feed result, got \(error) instead")
+            
+        default:
+            XCTFail("Expected successful feed result, got no result instead")
+        }
+    }
+    
+    
+    // MARK: - Helpers
+    
+    private func getFeedResult( file: StaticString = #filePath, line: UInt = #line) -> LoadFeedResult? {
+        let testServerURL = URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
+        let loader = RemoteFeedLoader(url: feedTestServerURL, client: ephemeralClient())
+        trackForMemoryLeaks(loader, file: file, line: line)
         
-        let loader = RemoteFeedLoader(url: url, client: client)
         let exp = expectation(description: "Wait for load completion")
         
         var receivedResult: LoadFeedResult?
@@ -28,46 +87,12 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
             exp.fulfill()
         }
         
-        wait(for: [exp], timeout: 5.0)
+        wait(for: [exp], timeout: 3.0) // take 2.067 seconds to get a response
         
-        switch receivedResult {
-        case .success(let items)?:
-            XCTAssertEqual(items.count, 8, "Expected 8 items in the test account feed")
-            
-            items.enumerated().forEach { (index, item) in
-                XCTAssertEqual(item, exptctedItem(at: index), "Unexpected item values at index \(index)")
-            }
-            
-        case let .failure(error)?:
-            XCTFail("Expected successful feed result, got \(error) instead")
-            
-        default:
-            XCTFail("Expected successful feed result, got not result instead")
-        }
+        //        sleep(5)
+        
+        return receivedResult
     }
-    
-    
-    // MARK: - Helpers
-    
-//    private func getFeedResult( file: StaticString = #filePath, line: UInt = #line) -> FeedLoader.Result? {
-//        let loader = RemoteFeedLoader(url: feedTestServerURL, client: ephemeralClient())
-//        trackForMemoryLeaks(loader, file: file, line: line)
-//        
-//        let exp = expectation(description: "Wait for load completion")
-//        
-//        var receivedResult: FeedLoader.Result?
-//        
-//        loader.load { result in
-//            receivedResult = result
-//            exp.fulfill()
-//        }
-//        
-//        wait(for: [exp], timeout: 3.0) // take 2.067 seconds to get a response
-//        
-//        //        sleep(5)
-//        
-//        return receivedResult
-//    }
     
     private func ephemeralClient(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
         // The default directory when running tests is /Users/{your-user-name}/Library/Caches/com.apple.dt.xctest.tool
