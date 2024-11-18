@@ -48,7 +48,7 @@ class RemoteFeedLoaderTests: XCTestCase {
     }
     
     func test_load_deliversErrorOnNon200HTTPResponse() {
-        // when http client fails we have some connectivity issue
+        // check 199, 201, 300, 400, 500 statuses
         
         let (client, sut) = makeSut()
         let samples = [199, 201, 300, 400, 500]
