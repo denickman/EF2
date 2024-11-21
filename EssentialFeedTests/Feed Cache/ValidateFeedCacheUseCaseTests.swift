@@ -8,6 +8,7 @@
 import XCTest
 import EssentialFeed
 
+
 // Context of validating feed cache
 
 final class ValidateFeedCacheUseCaseTests: XCTestCase {
@@ -33,44 +34,44 @@ final class ValidateFeedCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.retrive])
     }
     
-    func test_validate_doesNotDeleteLessThan7DaysOldCache() {
+    func test_validate_doesNotDeleteLessNonExpiredCache() {
         // do not delete cache if it less than 7 days old
         let (store, sut) = makeSUT()
         
         let feed = uniqueImagesFeed()
         let fixedCurrentDate = Date()
-        let lessThanSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: 1)
+        let nonExpiredTimestamp = fixedCurrentDate.minusFeedCacheAge().adding(seconds: 1)
         
         sut.validateCache()
-        store.completeRetrievalWithFeed(with: feed.local, timestamp: lessThanSevenDaysOldTimestamp)
+        store.completeRetrievalWithFeed(with: feed.local, timestamp: nonExpiredTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrive])
     }
     
-    func test_validateCache_deletesSevenDaysOldCache() {
+    func test_validateCache_deletesCacheOnExpiration() {
         // when get items from cache it should delete cache if more than 7 days old
         let (store, sut) = makeSUT()
         
         let feed = uniqueImagesFeed()
         let fixedCurrentDate = Date()
-        let sevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7)
+        let expirationTimestamp = fixedCurrentDate.minusFeedCacheAge()
         
         sut.validateCache()
-        store.completeRetrievalWithFeed(with: feed.local, timestamp: sevenDaysOldTimestamp)
+        store.completeRetrievalWithFeed(with: feed.local, timestamp: expirationTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
     }
     
-    func test_validateCache_deletesMoreThanSevenDaysOldCache() {
+    func test_validateCache_deletesExpiredCache() {
         // when get items from cache it should delete cache if more than 7 days old
         let (store, sut) = makeSUT()
         
         let feed = uniqueImagesFeed()
         let fixedCurrentDate = Date()
-        let moreThanSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: -1)
+        let expirationTimestamp = fixedCurrentDate.minusFeedCacheAge().adding(seconds: -1)
         
         sut.validateCache()
-        store.completeRetrievalWithFeed(with: feed.local, timestamp: moreThanSevenDaysOldTimestamp)
+        store.completeRetrievalWithFeed(with: feed.local, timestamp: expirationTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
     }

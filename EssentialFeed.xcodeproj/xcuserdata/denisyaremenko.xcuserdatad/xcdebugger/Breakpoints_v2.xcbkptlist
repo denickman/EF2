@@ -92,7 +92,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "59"
             endingLineNumber = "59"
-            landmarkName = "test_load_deliversCachedImagesOnLessThanSevenDaysOldCache()"
+            landmarkName = "test_load_deliversCachedImagesOnNonExpiredCache()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -108,7 +108,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
             endingLineNumber = "60"
-            landmarkName = "test_load_deliversCachedImagesOnLessThanSevenDaysOldCache()"
+            landmarkName = "test_load_deliversCachedImagesOnNonExpiredCache()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -124,7 +124,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
             endingLineNumber = "57"
-            landmarkName = "test_load_deliversCachedImagesOnLessThanSevenDaysOldCache()"
+            landmarkName = "test_load_deliversCachedImagesOnNonExpiredCache()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -163,22 +163,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8BACF040-2A06-4B41-A3DE-49D221F088B6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialFeed/Feed Cache/LocalFeedLoader.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "19"
-            endingLineNumber = "19"
-            landmarkName = "init(store:currentDate:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "B1493CFA-8AC0-4551-9E9D-B18D9B9EC34C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -186,8 +170,8 @@
             filePath = "EssentialFeed/Feed Cache/LocalFeedLoader.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "toModels()"
             landmarkType = "7">
          </BreakpointContent>
