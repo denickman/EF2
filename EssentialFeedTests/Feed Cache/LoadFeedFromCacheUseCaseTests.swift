@@ -90,27 +90,18 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         }
     }
     
-    func test_load_deletesCacheOnRetrievalError() {
-        // when load feed we delete a cache
+    func test_load_hasNoSideEffectsOnRetrievalError() {
+        // when load feed we do not delete a cache (no side effects but got error)
         let (store, sut) = makeSUT()
         
         sut.load { _ in }
         
         store.completeRetrieval(with: anyNSError())
-        XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
-    }
-    
-    func test_load_doesNotDeletesCacheOnEmptyCache() {
-        //
-        let (store, sut) = makeSUT()
-        
-        sut.load { _ in }
-        
-        store.completeRetrievalWithEmptyCache()
         XCTAssertEqual(store.receivedMessages, [.retrive])
     }
     
-    func test_load_doesNotDeletesCacheOnLessThan7DaysOldCache() {
+    func test_load_hasNoSideEffectsOnEmptyCache() {
+        // with no side effects
         // if cache is not invalid it should not be deleted
         let (store, sut) = makeSUT()
         
@@ -119,8 +110,9 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         store.completeRetrievalWithEmptyCache()
         XCTAssertEqual(store.receivedMessages, [.retrive])
     }
-    
-    func test_load_doesNotDeleteCacheOnLessThan7DaysOldCache() {
+
+    func test_load_hasNoSideEffectsOnLessThan7DaysOldCache() {
+        // no side effects
         // do not delete cache if it less than 7 days old
         let (store, sut) = makeSUT()
         
@@ -134,7 +126,8 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.retrive])
     }
     
-    func test_load_deletesCacheOnSevenDaysOldCache() {
+    func test_load_hasNoSideEffectsOnSevenDaysOldCache() {
+        // no side effects
         // when get items from cache it should delete cache if more than 7 days old
         let (store, sut) = makeSUT()
         
@@ -145,11 +138,11 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         sut.load { _ in }
         store.completeRetrievalWithFeed(with: feed.local, timestamp: sevenDaysOldTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
+        XCTAssertEqual(store.receivedMessages, [.retrive])
     }
     
-    
-    func test_load_deletesCacheOnMoreThanSevenDaysOldCache() {
+    func test_load_hasNoSideEffectsOnMoreThanSevenDaysOldCache() {
+        // no side effects
         // when get items from cache it should delete cache if more than 7 days old
         let (store, sut) = makeSUT()
         
@@ -160,7 +153,7 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         sut.load { _ in }
         store.completeRetrievalWithFeed(with: feed.local, timestamp: moreThanSevenDaysOldTimestamp)
         
-        XCTAssertEqual(store.receivedMessages, [.retrive, .deleteCachedFeed])
+        XCTAssertEqual(store.receivedMessages, [.retrive])
     }
     
     func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
@@ -222,37 +215,6 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
         action()
         wait(for: [exp], timeout: 1.0)
     }
-    
-    private func anyURL() -> URL {
-        URL(string: "https://any-url.com")!
-    }
-    
-    private func anyNSError() -> NSError {
-        NSError(domain: "domain", code: 0)
-    }
-    
-    private func uniqueImage() -> FeedImage {
-        .init(id: UUID(), description: "any", location: "any", url: anyURL())
-    }
-    
-    private func uniqueImagesFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
-        let models = [uniqueImage(), uniqueImage()]
-        
-        let local = models.map {
-             LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, url: $0.url)
-        }
-        
-        return (models, local)
-    }
 }
 
 
-private extension Date {
-    func adding(days: Int) -> Date {
-        Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
-    }
-    
-    func adding(seconds: TimeInterval) -> Date {
-        self + seconds
-    }
-}
