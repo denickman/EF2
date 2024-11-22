@@ -10,7 +10,7 @@ import Foundation
 // use cases encapsulate application specific business logic and LocalFeedLoader implements use cases,
 // the colloborating with other types, so it acts like a controller
 
-public final class LocalFeedLoader { // like a controller, interactor etc.
+public final class LocalFeedLoader { // like a controller, interactor, use case etc.
     // it holds application specific business logic
     
     private let store: FeedStore
@@ -51,7 +51,7 @@ extension LocalFeedLoader: FeedLoader {
     public typealias LoadResult = LoadFeedResult
     
     public func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrive { [weak self] result in // request (return the value but not change the state)
+        store.retrieve { [weak self] result in // request (return the value but not change the state)
             guard let self else { return }
             switch result {
             case let .found(feed, timestamp) where FeedCachePolicy.validate(timestamp, against: self.currentDate()):
@@ -72,7 +72,7 @@ extension LocalFeedLoader: FeedLoader {
 
 extension LocalFeedLoader {
     public func validateCache() {
-        store.retrive { [weak self] result in
+        store.retrieve { [weak self] result in
             guard let self else { return }
             
             switch result {
