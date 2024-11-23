@@ -252,7 +252,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "72"
             endingLineNumber = "72"
-            landmarkName = "test_load_deliversNoImagesImagesOnSevenDaysOldCache()"
+            landmarkName = "test_load_deliversNoImagesImagesOnCacheExpiration()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -268,7 +268,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "74"
             endingLineNumber = "74"
-            landmarkName = "test_load_deliversNoImagesImagesOnSevenDaysOldCache()"
+            landmarkName = "test_load_deliversNoImagesImagesOnCacheExpiration()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -284,7 +284,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "75"
             endingLineNumber = "75"
-            landmarkName = "test_load_deliversNoImagesImagesOnSevenDaysOldCache()"
+            landmarkName = "test_load_deliversNoImagesImagesOnCacheExpiration()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
