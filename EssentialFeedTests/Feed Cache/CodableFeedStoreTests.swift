@@ -8,6 +8,25 @@
 import XCTest
 import EssentialFeed
 
+protocol FeedStoreSpecs {
+    func test_retrieve_deliversEmptyOnEmptyCache()
+    func test_retrieve_hasNoSideEffectsOnEmptyCache()
+    func test_retrieve_deliversFoundValuesOnNonEmptyCache()
+    func test_retrieve_hasNoSidEffectsOnNonEmptyCache()
+
+    func test_insert_deliversErrorOnInsertionError()
+    func test_insert_overridesPreviouslyInsertedCacheValues()
+
+    func test_delete_hasNoSideEffectsOnEmptyCache()
+    func test_delete_emptiesPreviouslyInsertedCache()
+    func test_delete_deliversErrorOnDeletionError()
+
+    func test_storeSideEffects_runSerially()
+}
+
+// since in our case failable is not required options
+
+
 // Launch the tests
 // xcodebuild clean build test -project EssentialFeed/EssentialFeed.xcodeproj -scheme "EssentialFeed"
 
@@ -129,6 +148,40 @@ final class CodableFeedStoreTests: XCTestCase {
         
         XCTAssertNotNil(deletionError, "Expected cache deletion to fail")
         expect(sut, toRetrieve: .empty)
+    }
+    
+    // run serially
+    
+    func test_storeSideEffects_runSerially() {
+        let sut = makeSUT()
+        let op1 = expectation(description: "Operation 1")
+        
+        var completedOperations = [XCTestExpectation]()
+        
+        sut.insert(uniqueImagesFeed().local, timestamp: Date()) { _ in
+            completedOperations.append(op1)
+            op1.fulfill() // should finish before op2
+        }
+        
+        let op2 = expectation(description: "Operation 2")
+        sut.deleteCachedFeed { _ in
+            completedOperations.append(op2)
+            op2.fulfill() // should finish after op1
+        }
+        
+        let op3 = expectation(description: "Operation 3")
+        sut.insert(uniqueImagesFeed().local, timestamp: Date()) { _ in
+            completedOperations.append(op3)
+            op3.fulfill()
+        }
+        
+         waitForExpectations(timeout: 5.0)
+        
+        XCTAssertEqual(
+            completedOperations,
+            [op1, op2, op3],
+            "Expected side-effects to run serially but operations finished in the wrong order"
+        )
     }
     
     // MARK: - Helpers
