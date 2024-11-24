@@ -10,12 +10,13 @@ import Foundation
 // use cases encapsulate application specific business logic and LocalFeedLoader implements use cases,
 // the colloborating with other types, so it acts like a controller
 
-public final class LocalFeedLoader { // like a controller, interactor, use case etc.
+public final class LocalFeedLoader {
+    // like a controller, interactor, use case etc.
     // it holds application specific business logic
     
     private let store: FeedStore
     private let currentDate: () -> Date
- 
+    
     public init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
         self.currentDate = currentDate
@@ -24,40 +25,43 @@ public final class LocalFeedLoader { // like a controller, interactor, use case 
 
 extension LocalFeedLoader {
     
-    public typealias SaveResult = Error?
+    public typealias SaveResult = Result<Void, Error>
     
     public func save(_ feed: [FeedImage], completion: @escaping (SaveResult) -> Void) {
-        store.deleteCachedFeed { [weak self] error in
+        store.deleteCachedFeed { [weak self] deletionResult in
             guard let self else {return }
             
-            if let cacheDeletionError = error {
-                completion(cacheDeletionError)
-            } else {
+            switch deletionResult {
+            case .success:
                 self.cache(feed, with: completion)
+                
+            case let .failure(error):
+                completion(.failure(error))
             }
         }
     }
     
     private func cache(_ feed: [FeedImage], with completion: @escaping (SaveResult) -> Void) {
-        store.insert(feed.toLocal(), timestamp: currentDate()) { [weak self] error in
+        store.insert(feed.toLocal(), timestamp: currentDate()) { [weak self] insertionResult in
             guard self != nil else { return }
-            completion(error)
+            completion(insertionResult)
         }
     }
 }
 
 extension LocalFeedLoader: FeedLoader {
     
-    public typealias LoadResult = LoadFeedResult
+    public typealias LoadResult = FeedLoader.Result
     
     public func load(completion: @escaping (LoadResult) -> Void) {
         store.retrieve { [weak self] result in // request (return the value but not change the state)
             guard let self else { return }
             switch result {
-            case let .found(feed, timestamp) where FeedCachePolicy.validate(timestamp, against: self.currentDate()):
-                completion(.success(feed.toModels()))
+            case let .success(.some(cache)) where FeedCachePolicy.validate(cache.timestamp, against: self.currentDate()):
+                completion(.success(cache.feed.toModels()))
                 
-            case .found, .empty:
+                //            case .success(.found), .success(.empty):
+            case .success: // simplified
                 // found but not valid (because of more than 7 days old)
                 //                self.store.deleteCachedFeed { _ in } // side effect
                 completion(.success([]))
@@ -77,13 +81,14 @@ extension LocalFeedLoader {
             
             switch result {
                 
-            case let .found(_, timestamp) where !FeedCachePolicy.validate(timestamp, against: self.currentDate()):
+            case let .success(.some(cache)) where !FeedCachePolicy.validate(cache.timestamp, against: self.currentDate()):
                 self.store.deleteCachedFeed { _ in }
                 
             case .failure: // expired cache?
                 self.store.deleteCachedFeed { _ in }
                 
-            case .empty, .found: break
+                //            case .success(.empty), .success(.found): break
+            case .success: break // simplified
             }
         }
     }
