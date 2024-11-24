@@ -23,7 +23,6 @@ func uniqueImagesFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
     return (models, local)
 }
 
-
 func anyData() -> Data {
     Data("any data".utf8)
 }

@@ -9,6 +9,8 @@
 import XCTest
 import EssentialFeed
 
+// In finality we delete this coredatafeedstore tests 
+
 class CoreDataFeedStoreTests: XCTestCase, FeedStoreSpecs {
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
