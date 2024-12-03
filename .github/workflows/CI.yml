@@ -1,48 +1,54 @@
-
 name: CI
 
-# Controls when the action will run.
-# Triggers the workflow on specific pull request events.
+# Триггеры, определяющие, когда запускать workflow
 on:
   push:
     branches:
       - main
       - feature/image-feed/cache-feed-use-case
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build-and-test"
+  # Название задания
   build-and-test:
-    # The type of runner that the job will run on
+    # Тип runner'а
     runs-on: macos-14
 
+    # Максимальное время выполнения задания (в минутах)
     timeout-minutes: 5
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    # Шаги выполнения
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Шаг 1: Клонирование репозитория
       - uses: actions/checkout@v4
 
+      # Шаг 2: Выбор версии Xcode
       - name: Select Xcode
         run: sudo xcode-select -switch /Applications/Xcode_16.0.app
 
+      # Шаг 3: Проверка доступных симуляторов
       - name: Get simulators list
         run: xcrun simctl list
 
-      - name: Build and Test MAC OS
-        run: xcodebuild clean build test -project EssentialFeed.xcodeproj -scheme "CI_macOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk macosx -destination "platform=macOS" #SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
+      # Шаг 4: Сборка и тестирование для macOS
+      - name: Build and Test macOS
+        run: |
+          xcodebuild clean build test \
+          -project EssentialFeed.xcodeproj \
+          -scheme "CI_macOS" \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          -sdk macosx \
+          -destination "platform=macOS"
+          # SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
 
-      - name: Build and Test IOS
-        run: xcodebuild clean build test -project EssentialFeed.xcodeproj -scheme "CI_iOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator, OS=16.4, name=iPhone 14"   #SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
-
-
-      # - name: Build and Test
-      #   run: xcodebuild test -workspace EssentialApp.xcworkspace -scheme "CI" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO #SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
-
-      # - name: Setup Simulator
-      #   run: |
-      #       sudo mkdir -p /Library/Developer/CoreSimulator/Profiles/Runtimes
-      #       sudo ln -s /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS\ 16.4.simruntime
-      #       xcrun simctl list runtimes
-      #       xcrun simctl create "iPhone 12" com.apple.CoreSimulator.SimDeviceType.iPhone-12 com.apple.CoreSimulator.SimRuntime.iOS-16-4
-      #       xcrun simctl list devices 16.4
+      # Шаг 5: Сборка и тестирование для iOS
+      - name: Build and Test iOS
+        run: |
+          xcodebuild clean build test \
+          -project EssentialFeed.xcodeproj \
+          -scheme "CI_iOS" \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO \
+          -sdk iphonesimulator \
+          -destination "platform=iOS Simulator,OS=16.4,name=iPhone 14"
+          # SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
