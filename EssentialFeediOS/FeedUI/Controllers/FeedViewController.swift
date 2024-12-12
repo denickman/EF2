@@ -69,6 +69,7 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
 
 extension FeedViewController: FeedLoadingView {
     func display(_ viewModel: FeedLoadingViewModel) {
+
         if viewModel.isLoading {
             refreshControl?.beginRefreshing()
         } else {
