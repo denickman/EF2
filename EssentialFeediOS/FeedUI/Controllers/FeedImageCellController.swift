@@ -8,7 +8,6 @@
 import EssentialFeed
 import UIKit
 
-
 protocol FeedImageCellControllerDelegate {
     func didRequestImage()
     func didCancelImageRequest()
