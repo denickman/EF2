@@ -14,7 +14,8 @@ protocol FeedImageCellControllerDelegate {
 }
 
 final class FeedImageCellController: FeedImageView {
-     private let delegate: FeedImageCellControllerDelegate
+    
+    private let delegate: FeedImageCellControllerDelegate
     private var cell: FeedImageCell?
 
      init(delegate: FeedImageCellControllerDelegate) {
@@ -22,7 +23,7 @@ final class FeedImageCellController: FeedImageView {
      }
 
     func view(in tableView: UITableView) -> UITableViewCell {
-        self.cell = tableView.dequeueReusableCell()
+         self.cell = tableView.dequeueReusableCell()
          delegate.didRequestImage()
          return cell!
      }
