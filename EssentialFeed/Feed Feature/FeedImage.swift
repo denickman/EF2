@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public struct FeedImage: Hashable {
     
     public let id: UUID

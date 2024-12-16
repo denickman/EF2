@@ -16,3 +16,4 @@ public struct FeedImageViewModel<Image> {
         location != nil
     }
 }
+
