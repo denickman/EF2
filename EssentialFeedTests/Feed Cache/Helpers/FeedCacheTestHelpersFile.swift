@@ -23,10 +23,6 @@ func uniqueImagesFeed() -> (models: [FeedImage], local: [LocalFeedImage]) {
     return (models, local)
 }
 
-func anyData() -> Data {
-    Data("any data".utf8)
-}
-
 extension Date {
     private func adding(days: Int) -> Date {
         Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!

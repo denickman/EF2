@@ -11,7 +11,10 @@ func anyNSError() -> NSError {
     NSError(domain: "domain", code: 0)
 }
 
-
 func anyURL() -> URL {
     URL(string: "https://any-url.com")!
+}
+
+func anyData() -> Data {
+    return Data("any data".utf8)
 }
