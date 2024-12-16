@@ -26,7 +26,7 @@ public final class FeedUIComposer {
             loadingView: WeakRefVirtualProxy(feedController),
             errorView: WeakRefVirtualProxy(feedController)
         )
-
+        
         return feedController
     }
     

@@ -9,7 +9,7 @@ import Foundation
 
 public protocol FeedImageView {
     associatedtype Image
-    func display(_ model: FeedImageViewModel<Image>)
+    func display(_ viewModel: FeedImageViewModel<Image>)
 }
 
 public final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {

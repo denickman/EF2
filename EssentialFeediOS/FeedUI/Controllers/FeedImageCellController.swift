@@ -17,16 +17,16 @@ final class FeedImageCellController: FeedImageView {
     
     private let delegate: FeedImageCellControllerDelegate
     private var cell: FeedImageCell?
-
-     init(delegate: FeedImageCellControllerDelegate) {
-         self.delegate = delegate
-     }
-
+    
+    init(delegate: FeedImageCellControllerDelegate) {
+        self.delegate = delegate
+    }
+    
     func view(in tableView: UITableView) -> UITableViewCell {
-         self.cell = tableView.dequeueReusableCell()
-         delegate.didRequestImage()
-         return cell!
-     }
+        self.cell = tableView.dequeueReusableCell()
+        delegate.didRequestImage()
+        return cell!
+    }
     
     func preload() {
         delegate.didRequestImage()
@@ -44,7 +44,7 @@ final class FeedImageCellController: FeedImageView {
         cell?.feedImageView.image = viewModel.image
         
         cell?.feedImageView.setImageAnimated(viewModel.image)
-
+        
         cell?.feedImageContainer.isShimmering = viewModel.isLoading
         cell?.feedImageRetryButton.isHidden = !viewModel.shouldRetry
         cell?.onRetry = delegate.didRequestImage
