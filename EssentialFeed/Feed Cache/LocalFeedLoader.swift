@@ -87,7 +87,7 @@ extension LocalFeedLoader {
                 self.store.deleteCachedFeed { _ in completion(.success(())) }
                 
             case .failure: // expired cache?
-                self.store.deleteCachedFeed { _ in completion(.success(())) }
+                self.store.deleteCachedFeed(completion: completion)
                 
                 //            case .success(.empty), .success(.found): break
             case .success:
