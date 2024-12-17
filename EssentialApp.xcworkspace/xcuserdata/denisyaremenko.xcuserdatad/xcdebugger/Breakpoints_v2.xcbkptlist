@@ -69,84 +69,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E6678214-B7FE-4706-A583-D6A2F9D2465F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "test_load_deliversPrimaryFeedOnPrimaryLoaderSuccess()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "E6678214-B7FE-4706-A583-D6A2F9D2465F - 34fbeb4c9cc025e1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EssentialAppTests.FeedLoaderWithFallbackCompositeTests.test_load_deliversPrimaryFeedOnPrimaryLoaderSuccess() -&gt; ()"
-                  moduleName = "EssentialAppTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denisyaremenko/Desktop/iOS/Education/Caio&amp;Mike2/EssentialFeed/EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "47"
-                  endingLineNumber = "47">
-               </Location>
-               <Location
-                  uuid = "E6678214-B7FE-4706-A583-D6A2F9D2465F - 55e313d22b4c02eb"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;EssentialFeed.FeedImage&gt;, Swift.Error&gt;) -&gt; () in EssentialAppTests.FeedLoaderWithFallbackCompositeTests.test_load_deliversPrimaryFeedOnPrimaryLoaderSuccess() -&gt; ()"
-                  moduleName = "EssentialAppTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denisyaremenko/Desktop/iOS/Education/Caio&amp;Mike2/EssentialFeed/EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "47"
-                  endingLineNumber = "47">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "9AB2DB1B-73A7-471E-8D37-00E0BC988DC9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "test_load_deliversPrimaryFeedOnPrimaryLoaderSuccess()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "67D4EEC7-0B81-4B97-A730-3511C929A181"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "test_load_deliversPrimaryFeedOnPrimaryLoaderSuccess()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "4B114EC1-C6F6-476E-B90C-2CA7DB73A658"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -154,8 +76,8 @@
             filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
             landmarkName = "init(result:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,8 +92,8 @@
             filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "load(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -211,84 +133,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6EB72B26-D581-484C-970A-AD15DE20B0ED"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "test_load_deliversFallbackFeedOnPrimaryFailure()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6EB72B26-D581-484C-970A-AD15DE20B0ED - 7122e47229be4873"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "EssentialAppTests.FeedLoaderWithFallbackCompositeTests.test_load_deliversFallbackFeedOnPrimaryFailure() -&gt; ()"
-                  moduleName = "EssentialAppTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denisyaremenko/Desktop/iOS/Education/Caio&amp;Mike2/EssentialFeed/EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "71"
-                  endingLineNumber = "71">
-               </Location>
-               <Location
-                  uuid = "6EB72B26-D581-484C-970A-AD15DE20B0ED - a240ea351c4d3f52"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Swift.Array&lt;EssentialFeed.FeedImage&gt;, Swift.Error&gt;) -&gt; () in EssentialAppTests.FeedLoaderWithFallbackCompositeTests.test_load_deliversFallbackFeedOnPrimaryFailure() -&gt; ()"
-                  moduleName = "EssentialAppTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/denisyaremenko/Desktop/iOS/Education/Caio&amp;Mike2/EssentialFeed/EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "71"
-                  endingLineNumber = "71">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3FAD6049-ED26-4DDE-9892-0B8D5EF534D6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "test_load_deliversFallbackFeedOnPrimaryFailure()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "34FA9192-1094-46DB-A4E7-ED8D226B3F82"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "test_load_deliversFallbackFeedOnPrimaryFailure()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "399BF1BF-5C1A-4FCF-AE18-77576DBBF070"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -296,8 +140,8 @@
             filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
             landmarkName = "makeSUT(primaryResult:fallbackResult:file:line:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -312,8 +156,8 @@
             filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "makeSUT(primaryResult:fallbackResult:file:line:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -328,8 +172,8 @@
             filePath = "EssentialApp/EssentialAppTests/FeedLoaderWithFallbackCompositeTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "makeSUT(primaryResult:fallbackResult:file:line:)"
             landmarkType = "7">
          </BreakpointContent>
