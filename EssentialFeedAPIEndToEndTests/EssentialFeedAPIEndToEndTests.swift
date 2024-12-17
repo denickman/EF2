@@ -88,6 +88,8 @@ final class EssentialFeedAPIEndToEndTests: XCTestCase {
 
     private var feedTestServerURL: URL {
         return URL(string: "https://essentialdeveloper.com/feed-case-study/test-api/feed")!
+        // another one
+        // https://ile-api.essentialdeveloper.com/essential-feed/v1/feed
     }
 
     private func getFeedResult( file: StaticString = #filePath, line: UInt = #line) -> FeedLoader.Result? {
