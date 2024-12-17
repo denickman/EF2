@@ -8,7 +8,6 @@
 import Foundation
 import EssentialFeed
 
-
 func uniqueImage() -> FeedImage {
     .init(id: UUID(), description: "any", location: "any", url: anyURL())
 }

@@ -77,11 +77,6 @@
 			path = EssentialAppTests;
 			sourceTree = "<group>";
 		};
-		85C6B4682D11968700D3612E /* EssentialAppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = EssentialAppUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +120,6 @@
 			children = (
 				85C6B4472D11968600D3612E /* EssentialApp */,
 				85C6B45E2D11968700D3612E /* EssentialAppTests */,
-				85C6B4682D11968700D3612E /* EssentialAppUITests */,
 				857A59392D11999100A4DFFD /* Frameworks */,
 				85C6B4462D11968600D3612E /* Products */,
 			);
@@ -203,9 +197,6 @@
 			dependencies = (
 				85C6B4672D11968700D3612E /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				85C6B4682D11968700D3612E /* EssentialAppUITests */,
-			);
 			name = EssentialAppUITests;
 			packageProductDependencies = (
 			);
@@ -228,6 +219,7 @@
 					};
 					85C6B45A2D11968700D3612E = {
 						CreatedOnToolsVersion = 16.0;
+						LastSwiftMigration = 1600;
 						TestTargetID = 85C6B4442D11968600D3612E;
 					};
 					85C6B4642D11968700D3612E = {
@@ -494,6 +486,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -502,6 +495,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.EssentialAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EssentialApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EssentialApp";
@@ -512,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
