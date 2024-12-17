@@ -68,34 +68,39 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         undoStoreSideEffects()
     }
     
-    func test_load_deliversNoItemsOnEmptyCache() {
-        let sut = makeFeedLoader()
-        expect(sut, toLoad: [])
+    // MARK: - LocalFeedLoader Tests
+    
+    func test_loadFeed_deliversNoItemsOnEmptyCache() {
+        let feedLoader = makeFeedLoader()
+        
+        expect(feedLoader, toLoad: [])
     }
     
     func test_load_deliversItemsSavedOnASeparateInstance() {
         // test several instances that can handle the same cache data
-        let sutToPerformSave = makeFeedLoader()
-        let sutToPerformLoad = makeFeedLoader()
+        let feedLoaderToPerformSave = makeFeedLoader()
+        let feedLoaderToPerformLoad = makeFeedLoader()
         let feed = uniqueImagesFeed().models
         
-        save(feed, with: sutToPerformSave)
-        expect(sutToPerformLoad, toLoad: feed)
+        save(feed, with: feedLoaderToPerformSave)
+        
+        expect(feedLoaderToPerformLoad, toLoad: feed)
     }
     
     func test_save_overridesItemsSavedOnASeparateInstance() {
         // override items using separate instances
         
-        let sutToPerformFirstSave = makeFeedLoader()
-        let sutToPerformLastSave = makeFeedLoader()
-        let sutToPerformLoad = makeFeedLoader()
+        let feedLoaderToPerformFirstSave = makeFeedLoader()
+        let feedLoaderToPerformLastSave = makeFeedLoader()
+        let feedLoaderToPerformLoad = makeFeedLoader()
+        
         let firstFeed = uniqueImagesFeed().models
         let latestFeed = uniqueImagesFeed().models
         
-        save(firstFeed, with: sutToPerformFirstSave)
-        save(latestFeed, with: sutToPerformLastSave)
+        save(firstFeed, with: feedLoaderToPerformFirstSave)
+        save(latestFeed, with: feedLoaderToPerformLastSave)
         
-        expect(sutToPerformLoad, toLoad: latestFeed)
+        expect(feedLoaderToPerformLoad, toLoad: latestFeed)
     }
     
     // MARK: - LocalFeedImageDataLoader Tests
@@ -114,7 +119,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
     }
     
     // MARK: - Helpers
- 
+    
     private func makeFeedLoader(file: StaticString = #file, line: UInt = #line) -> LocalFeedLoader {
         let storeURL = testSpecificStoreURL()
         let store = try! CoreDataFeedStore(storeURL: storeURL)
@@ -130,7 +135,7 @@ final class EssentialFeedCacheIntegrationTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
     }
- 
+    
     private func save(_ feed: [FeedImage], with loader: LocalFeedLoader, file: StaticString = #file, line: UInt = #line) {
         let saveExp = expectation(description: "Wait for save completion")
         loader.save(feed) { result in
