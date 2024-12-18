@@ -18,13 +18,13 @@ public final class URLSessionHTTPClient: HTTPClient {
     private struct UnexpectedValueRepresentationError: Error {}
     
     private struct URLSessionTaskWrapper: HTTPClientTask {
-             let wrapped: URLSessionTask
-
-             func cancel() {
-                 wrapped.cancel()
-             }
-         }
-
+        let wrapped: URLSessionTask
+        
+        func cancel() {
+            wrapped.cancel()
+        }
+    }
+    
     public func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
         let task = session.dataTask(with: url) { data, response, error in
             
@@ -38,25 +38,24 @@ public final class URLSessionHTTPClient: HTTPClient {
                 }
             })
         }
-            task.resume()
+        task.resume()
         return URLSessionTaskWrapper(wrapped: task)
     }
     
-    
-                 
+
     /// #old version
     public func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) {
         session.dataTask(with: url) { data, response, error in
             
             /// Option 1
-//            if let error {
-//                completion(.failure(error))
-//            } else if let data = data, let response = response as? HTTPURLResponse {
-//                completion(.success((data, response)))
-//            }
-//            else {
-//                completion(.failure(UnexpectedValueRepresentationError()))
-//            }
+            //            if let error {
+            //                completion(.failure(error))
+            //            } else if let data = data, let response = response as? HTTPURLResponse {
+            //                completion(.success((data, response)))
+            //            }
+            //            else {
+            //                completion(.failure(UnexpectedValueRepresentationError()))
+            //            }
             
             /// Option 2
             
