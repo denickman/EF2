@@ -28,7 +28,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        
 //        window?.rootViewController = feedViewController
         
-
         let remoteURL = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
         let localStoreURL = NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.sqlite")
         
@@ -42,14 +41,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let remoteImageLoader = RemoteFeedImageDataLoader(client: remoteClient)
         let localImageLoader = LocalFeedImageDataLoader(store: localStore)
         
-        let feedLoader = FeedLoaderWithFallbackComposite(
+        let primaryFeedLoader = FeedLoaderWithFallbackComposite(
             primary: FeedLoaderCacheDecorator(decoratee: remoteFeedLoader, cache: localFeedLoader),
             fallback: localFeedLoader
         )
         
-        let imageLoader = FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader, fallback: remoteImageLoader)
+        let imageLoader = FeedImageDataLoaderWithFallbackComposite(primary: localImageLoader, fallback: FeedImageDataLoaderCacheDecorator(decoratee: remoteImageLoader, cache: localImageLoader))
 
-        window?.rootViewController = FeedUIComposer.feedComposeWith(feedLoader: feedLoader, imageLoader: imageLoader)
+        window?.rootViewController = FeedUIComposer.feedComposeWith(feedLoader: primaryFeedLoader, imageLoader: imageLoader)
+        
+        
+        // in order to test local loaders use this after loading from remote server
+//        window?.rootViewController = FeedUIComposer.feedComposeWith(feedLoader: localFeedLoader, imageLoader: localFeedLoader)
     }
 }
 
