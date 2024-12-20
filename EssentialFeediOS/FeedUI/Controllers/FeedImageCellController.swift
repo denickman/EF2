@@ -24,6 +24,9 @@ final class FeedImageCellController: FeedImageView {
     
     func view(in tableView: UITableView) -> UITableViewCell {
         self.cell = tableView.dequeueReusableCell()
+        /// accessibilityIdentifier 'feed-image-cell' for EssentialAppUIAcceptanceTests
+        self.cell?.accessibilityIdentifier = "feed-image-cell"
+
         delegate.didRequestImage()
         return cell!
     }
@@ -38,6 +41,7 @@ final class FeedImageCellController: FeedImageView {
     }
     
     func display(_ viewModel: FeedImageViewModel<UIImage>) {
+        
         cell?.locationContainer.isHidden = !viewModel.hasLocation
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description

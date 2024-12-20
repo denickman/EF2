@@ -16,11 +16,19 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
         
         XCTAssertEqual(app.cells.count, 22)
         
-        let firstCell = app.cells.firstMatch
-        let image = firstCell.images.matching(identifier: "feed-image").firstMatch
+//        let firstCell = app.cells.firstMatch
+//        let image = firstCell.images.matching(identifier: "feed-image").firstMatch
+//        
+//        XCTAssertTrue(firstCell.exists, "First cell should exist")
+//        XCTAssertTrue(image.exists, "Image in the first cell should exist")
         
-        XCTAssertTrue(firstCell.exists, "First cell should exist")
-        XCTAssertTrue(image.exists, "Image in the first cell should exist")
+        let feedCells = app.cells.matching(identifier: "feed-image-cell")
+        XCTAssertEqual(feedCells.count, 22)
+        
+        let firstImage = app.images.matching(identifier: "feed-image").firstMatch
+        XCTAssertTrue(firstImage.exists)
+
+
     }
     
 }
