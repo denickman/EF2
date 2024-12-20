@@ -8,7 +8,7 @@
 import EssentialFeed
 
 public final class FeedLoaderCacheDecorator: FeedLoader {
-    /// in order to not add save method to the feed loader we use decorator to make this
+    /// in order to not add save method to the feed loader protocol we use decorator to make this
     
     private let decoratee: FeedLoader
     private let cache: FeedCache
