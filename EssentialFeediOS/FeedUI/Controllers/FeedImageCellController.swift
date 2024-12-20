@@ -41,6 +41,8 @@ final class FeedImageCellController: FeedImageView {
         cell?.locationContainer.isHidden = !viewModel.hasLocation
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
+        /// accessibilityIdentifier 'feed-image' for EssentialAppUIAcceptanceTests
+        cell?.feedImageView.accessibilityIdentifier = "feed-image"
         cell?.feedImageView.image = viewModel.image
         
         cell?.feedImageView.setImageAnimated(viewModel.image)

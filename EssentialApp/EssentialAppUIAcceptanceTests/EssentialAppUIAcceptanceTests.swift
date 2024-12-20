@@ -10,14 +10,17 @@ import XCTest
 final class EssentialAppUIAcceptanceTests: XCTestCase {
     
     func test_onLaunch_displaysRemoteFeedWhenCustomerHasConnectivity() {
-        
         let app = XCUIApplication()
         
         app.launch()
         
-        // 22 - because of the initial state
         XCTAssertEqual(app.cells.count, 22)
-        XCTAssertEqual(app.cells.firstMatch.images.count, 1)
+        
+        let firstCell = app.cells.firstMatch
+        let image = firstCell.images.matching(identifier: "feed-image").firstMatch
+        
+        XCTAssertTrue(firstCell.exists, "First cell should exist")
+        XCTAssertTrue(image.exists, "Image in the first cell should exist")
     }
-
+    
 }
