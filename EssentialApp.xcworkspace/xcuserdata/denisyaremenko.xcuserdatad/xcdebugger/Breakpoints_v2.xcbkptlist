@@ -270,22 +270,6 @@
             filePath = "EssentialApp/EssentialAppUIAcceptanceTests/EssentialAppUIAcceptanceTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
-            landmarkName = "test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "572E10AB-F0ED-4A70-803D-3E07D5A499C9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "EssentialApp/EssentialAppUIAcceptanceTests/EssentialAppUIAcceptanceTests.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
             endingLineNumber = "35"
             landmarkName = "test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity()"
@@ -295,7 +279,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F9ACFEF3-3778-4CA9-89A1-0CADD7520443"
+            uuid = "572E10AB-F0ED-4A70-803D-3E07D5A499C9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -311,6 +295,22 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "F9ACFEF3-3778-4CA9-89A1-0CADD7520443"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "EssentialApp/EssentialAppUIAcceptanceTests/EssentialAppUIAcceptanceTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             uuid = "43B0840D-0BC7-440C-8CD6-F34C9CC46636"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -318,8 +318,8 @@
             filePath = "EssentialApp/EssentialAppUIAcceptanceTests/EssentialAppUIAcceptanceTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity()"
             landmarkType = "7">
          </BreakpointContent>
@@ -334,8 +334,8 @@
             filePath = "EssentialApp/EssentialAppUIAcceptanceTests/EssentialAppUIAcceptanceTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "test_onLaunch_displaysCachedRemoteFeedWhenCustomerHasNoConnectivity()"
             landmarkType = "7">
          </BreakpointContent>

@@ -11,6 +11,7 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
     
     func test_onLaunch_displaysRemoteFeedWhenCustomerHasConnectivity() {
         let app = XCUIApplication()
+        app.launchArguments = ["-reset"]
         app.launch()
         
         XCTAssertEqual(app.cells.count, 22)
@@ -32,6 +33,7 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
         // first we have to launch the app with connectivity in order to store feed into the cache
         // then launch it offline to check the cache is exist
         let onlineApp = XCUIApplication()
+        onlineApp.launchArguments = ["-reset"]
         onlineApp.launch()
         
         let offlineApp = XCUIApplication()
@@ -49,7 +51,6 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
     
     func test_onLaunch_displaysEmptyFeedWhenCustomerHasNoConnectivityAndNoCache() {
         // no connectivity and no cache
-        
         
         let app = XCUIApplication()
         app.launchArguments = ["-reset", "-connectivity", "offline"]
