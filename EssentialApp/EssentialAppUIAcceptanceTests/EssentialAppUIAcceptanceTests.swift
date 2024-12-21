@@ -57,10 +57,7 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
         app.launch()
         
         let feedCells = app.cells.matching(identifier: "feed-image-cell")
-        XCTAssertEqual(feedCells.count, .zero)
-        
-
-        
+        XCTAssertEqual(feedCells.count, .zero)    
     }
     
 }
