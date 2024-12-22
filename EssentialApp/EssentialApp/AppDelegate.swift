@@ -15,15 +15,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        
-        let configuration = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-        
-#if DEBUG
-        configuration.delegateClass = DebuggingSceneDelegate.self
-#endif
-        
-        return configuration
-    }
+/// Not actual anymore since we comment EssentialAppUIAcceptanceTests
+
+//    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+//        
+//        let configuration = UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+//        
+//#if DEBUG
+//        configuration.delegateClass = DebuggingSceneDelegate.self
+//#endif
+//        
+//        return configuration
+//    }
 }
 

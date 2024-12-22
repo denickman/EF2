@@ -5,6 +5,10 @@
 //  Created by Denis Yaremenko on 21.12.2024.
 //
 
+
+/// Not actual anymore since we comment EssentialAppUIAcceptanceTests
+ 
+/*
 import UIKit
 import EssentialFeed
 import CoreData
@@ -93,3 +97,4 @@ private class DebuggingHTTPClient: HTTPClient {
 }
 
 #endif
+*/
