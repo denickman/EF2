@@ -1,8 +1,8 @@
 //
-//  FeedViewControllerTests+Localization.swift
-//  EssentialFeed
+//  FeedUIIntegrationTests+Localization.swift
+//  EssentialApp
 //
-//  Created by Denis Yaremenko on 11.12.2024.
+//  Created by Denis Yaremenko on 22.12.2024.
 //
 
 import Foundation
