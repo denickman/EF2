@@ -7,6 +7,11 @@
 
 import XCTest
 
+/// Now it it redundant tests since we check the logic in 'FeedAcceptanceTests'
+
+/*
+ 
+
 final class EssentialAppUIAcceptanceTests: XCTestCase {
     
     func test_onLaunch_displaysRemoteFeedWhenCustomerHasConnectivity() {
@@ -53,3 +58,6 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
     }
     
 }
+
+
+*/
