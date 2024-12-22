@@ -24,6 +24,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         )
     }()
     
+    private lazy var localFeedLoader: LocalFeedLoader = {
+        LocalFeedLoader(store: store, currentDate: Date.init)
+    }()
+    
     // MARK: - Init
     
     convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
@@ -46,13 +50,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func configureWindow() {
         let remoteURL = URL(string: "https://static1.squarespace.com/static/5891c5b8d1758ec68ef5dbc2/t/5db4155a4fbade21d17ecd28/1572083034355/essential_app_feed.json")!
         
-/// Not actual anymore since we comment EssentialAppUIAcceptanceTests
-//        let remoteClient = makeRemoteClient()
+        /// Not actual anymore since we comment EssentialAppUIAcceptanceTests
+        //        let remoteClient = makeRemoteClient()
         
         let remoteFeedLoader = RemoteFeedLoader(url: remoteURL, client: httpClient)
         let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
-   
-        let localFeedLoader = LocalFeedLoader(store: store, currentDate: Date.init)
+        
+        //        let localFeedLoader = LocalFeedLoader(store: store, currentDate: Date.init)
         let localImageLoader = LocalFeedImageDataLoader(store: store)
         
         let feedViewController = FeedUIComposer.feedComposeWith(
@@ -70,10 +74,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = UINavigationController(rootViewController: feedViewController)
     }
     
-/// Not actual anymore since we comment EssentialAppUIAcceptanceTests
-//    func makeRemoteClient() -> HTTPClient {
-//        return httpClient
-//    }
+    func sceneWillResignActive(_ scene: UIScene) {
+        localFeedLoader.validateCache { _ in }
+    }
+    
+    /// Not actual anymore since we comment EssentialAppUIAcceptanceTests
+    //    func makeRemoteClient() -> HTTPClient {
+    //        return httpClient
+    //    }
 }
 
 
