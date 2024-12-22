@@ -48,8 +48,8 @@ final class EssentialAppUIAcceptanceTests: XCTestCase {
         app.launchArguments = ["-reset", "-connectivity", "offline"]
         app.launch()
         
-        let feedCells = app.cells.matching(identifier: "feed-image")
-        XCTAssertEqual(feedCells.count, .zero)    
+        let feedCells = app.cells.matching(identifier: "feed-image-cell")
+        XCTAssertEqual(feedCells.count, .zero)
     }
     
 }
