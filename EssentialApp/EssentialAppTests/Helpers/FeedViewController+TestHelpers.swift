@@ -56,6 +56,8 @@ extension FeedViewController {
     }
     
     func numberOfRenderedFeedImageViews() -> Int {
+        /// tableView.reloadData does not force an immediate layout update
+        /// 'didEndDisplayingCell' will only be called in the next layout cycle
         return tableView.numberOfRows(inSection: feedImagesSection)
     }
     

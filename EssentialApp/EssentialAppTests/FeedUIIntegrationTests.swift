@@ -26,52 +26,51 @@ final class FeedUIIntegrationTests: XCTestCase {
         sut.loadViewIfNeeded()
         XCTAssertEqual(loader.loadFeedCallCount, 1, "Expected a loading request once view is loaded")
         
-        //        sut.simulateUserInitiatedFeedReload()
-        //        XCTAssertEqual(loader.loadFeedCallCount, 2, "Expected another loading request once user initiates a reload")
+        sut.simulateUserInitiatedFeedReload()
+        XCTAssertEqual(loader.loadFeedCallCount, 2, "Expected another loading request once user initiates a reload")
         
-        //        sut.simulateUserInitiatedFeedReload()
-        //        XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected yet another loading request once user initiates another reload")
+        sut.simulateUserInitiatedFeedReload()
+        XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected yet another loading request once user initiates another reload")
     }
     
     func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
         
         // https://academy.essentialdeveloper.com/courses/1112681/lectures/50273453
         
-        //        let (sut, loader) = makeSUT()
-        //        sut.loadViewIfNeeded()
-        //        sut.replaceRefreshControlWithFakeForiOS17Support()
-        //
-        //        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
-        //
-        ////        sut.beginAppearanceTransition(true, animated: false)
-        ////        sut.endAppearanceTransition()
-        //        sut.refreshControl?.beginRefreshing()
-        //        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
-        //
-        //        sut.refreshControl?.sendActions(for: .valueChanged)
-        //        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
-        //
-        //        sut.refreshControl?.endRefreshing()
-        //        sut.beginAppearanceTransition(true, animated: false)
-        //        sut.endAppearanceTransition()
-        //
-        //        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        sut.replaceRefreshControlWithFakeForiOS17Support()
         
-        //        let window = UIWindow()
-        //        window.rootViewController = sut
-        //        window.makeKeyAndVisible()
-        //
-        //        RunLoop.current.run(until: Date() + 0.3)
-        //        window.layoutIfNeeded()
+        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
         
-        //        sut.beginAppearanceTransition(true, animated: false) // viewWillAppear
-        //        sut.endAppearanceTransition() // viewIsAppearing + viewDidAppear
-        //        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        sut.refreshControl?.beginRefreshing()
+        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
         
+        sut.refreshControl?.sendActions(for: .valueChanged)
+        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
         
-        //        sut.refreshControl?.endRefreshing()
-        //        sut.refreshControl?.sendActions(for: .valueChanged)
-        //        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+        sut.refreshControl?.endRefreshing()
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        
+        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
+        
+        let window = UIWindow()
+        window.rootViewController = sut
+        window.makeKeyAndVisible()
+        
+        RunLoop.current.run(until: Date() + 0.3)
+        window.layoutIfNeeded()
+        
+        sut.beginAppearanceTransition(true, animated: false) // viewWillAppear
+        sut.endAppearanceTransition() // viewIsAppearing + viewDidAppear
+        //                XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+        
+        sut.refreshControl?.endRefreshing()
+        sut.refreshControl?.sendActions(for: .valueChanged)
+        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
     }
     
     // Cells
@@ -89,9 +88,28 @@ final class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
         
-        //        sut.simulateUserInitiatedFeedReload()
-        //        loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
-        //        assertThat(sut, isRendering: [image0, image1, image2, image3])
+        sut.simulateUserInitiatedFeedReload()
+        loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
+        assertThat(sut, isRendering: [image0, image1, image2, image3])
+    }
+    
+    func test_loadFeedCompletion_rendersSuccessfullyLoadedEmptyFeedAfterNonEmptyFeed() {
+        // case when at first we have feeds models in feedvctrl,
+        // then feed went away and didEndDisplaying may potentially crash after table view reload its data
+        let image0 = makeImage()
+        let image1 = makeImage()
+        
+        let (sut, loader) = makeSUT()
+        sut.loadViewIfNeeded()
+        assertThat(sut, isRendering: [])
+        
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+        assertThat(sut, isRendering: [image0, image1])
+        
+        // load again but receive an empty image models
+        sut.simulateUserInitiatedFeedReload()
+        loader.completeFeedLoading(with: [], at: 1)
+        assertThat(sut, isRendering: [])
     }
     
     func test_loadFeedCompletion_rendersErrorMessageOnErrorUntilNextReload() {
@@ -115,9 +133,9 @@ final class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
         
-        //        sut.simulateUserInitiatedFeedReload()
-        //        loader.completeFeedLoadingWithError(at: 1)
-        //        assertThat(sut, isRendering: [image0])
+        sut.simulateUserInitiatedFeedReload()
+        loader.completeFeedLoadingWithError(at: 1)
+        assertThat(sut, isRendering: [image0])
     }
     
     func test_feedImageView_loadsImageURLWhenVisible() {
@@ -146,11 +164,11 @@ final class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0, image1])
         XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no cancelled image URL requests until image is not visible")
         
-        //        sut.simulateFeedImageViewNotVisible(at: 0)
-        //        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected one cancelled image URL request once first image is not visible anymore")
-        //
-        //        sut.simulateFeedImageViewNotVisible(at: 1)
-        //        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visible anymore")
+        sut.simulateFeedImageViewNotVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected one cancelled image URL request once first image is not visible anymore")
+        
+        sut.simulateFeedImageViewNotVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected two cancelled image URL requests once second image is also not visible anymore")
     }
     
     func test_feedImageViewLoadingIndicator_isVisibleWhileLoadingImage() {
@@ -189,10 +207,10 @@ final class FeedUIIntegrationTests: XCTestCase {
         //        XCTAssertEqual(view0?.renderedImage, imageData0, "Expected image for first view once first image loading completes successfully")
         XCTAssertEqual(view1?.renderedImage, .none, "Expected no image state change for second view once first image loading completes successfully")
         
-        //        let imageData1 = UIImage.make(withColor: .blue).pngData()!
-        //        loader.completeImageLoading(with: imageData1, at: 1)
-        //        XCTAssertEqual(view0?.renderedImage, imageData0, "Expected no image state change for first view once second image loading completes successfully")
-        //        XCTAssertEqual(view1?.renderedImage, imageData1, "Expected image for second view once second image loading completes successfully")
+        let imageData1 = UIImage.make(withColor: .blue).pngData()!
+        loader.completeImageLoading(with: imageData1, at: 1)
+        XCTAssertEqual(view0?.renderedImage, imageData0, "Expected no image state change for first view once second image loading completes successfully")
+        XCTAssertEqual(view1?.renderedImage, imageData1, "Expected image for second view once second image loading completes successfully")
     }
     
     func test_feedImageViewRetryButton_isVisibleOnImageURLLoadError() {
