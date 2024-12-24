@@ -1,11 +1,9 @@
 //
-//  LocalFeedItem.swift
+//  LocalFeedImage.swift
 //  EssentialFeed
 //
-//  Created by Denis Yaremenko on 20.11.2024.
+//  Created by Denis Yaremenko on 24.12.2024.
 //
-
-import Foundation
 
 // So in order to decouple rigit connections between modules we add intermediate data model - LocalFeedItem
 // this is a mirror of a FeedItem but a local representation
@@ -29,4 +27,3 @@ public struct LocalFeedImage: Equatable {
         self.url = url
     }
 }
-
