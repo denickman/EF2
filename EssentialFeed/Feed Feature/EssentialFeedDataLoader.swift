@@ -8,7 +8,7 @@
 public protocol FeedImageDataLoaderTask {
     func cancel()
 }
-
+// protocol defines to load image data
 public protocol FeedImageDataLoader {
     typealias Result = Swift.Result<Data, Error>
     
