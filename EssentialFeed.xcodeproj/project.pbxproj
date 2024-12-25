@@ -11,7 +11,6 @@
 		85824C9E2CE0D435005D5D19 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85824C672CDA49C1005D5D19 /* EssentialFeed.framework */; };
 		859D543B2CFF0403001E9F0A /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 859D54312CFF0403001E9F0A /* EssentialFeediOS.framework */; };
 		859D54CB2CFF28DC001E9F0A /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85824C672CDA49C1005D5D19 /* EssentialFeed.framework */; platformFilter = ios; };
-		859D54CC2CFF28DC001E9F0A /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 85824C672CDA49C1005D5D19 /* EssentialFeed.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		85CC3FE52CE4B73900A5C7FA /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85824C672CDA49C1005D5D19 /* EssentialFeed.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,20 +51,6 @@
 			remoteInfo = EssentialFeed;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		859D54CF2CFF28DD001E9F0A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				859D54CC2CFF28DC001E9F0A /* EssentialFeed.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		851C389A2CF33D8D0016B995 /* EssentialFeedCacheIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedCacheIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -337,7 +322,6 @@
 				859D542D2CFF0403001E9F0A /* Sources */,
 				859D542E2CFF0403001E9F0A /* Frameworks */,
 				859D542F2CFF0403001E9F0A /* Resources */,
-				859D54CF2CFF28DD001E9F0A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
