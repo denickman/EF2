@@ -71,7 +71,8 @@
 		851C389A2CF33D8D0016B995 /* EssentialFeedCacheIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedCacheIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85824C672CDA49C1005D5D19 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85824C9A2CE0D435005D5D19 /* EssentialFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		859C63992CE4BDA700777ED8 /* CI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI.xctestplan; sourceTree = "<group>"; };
+		8583F8342D1C0DA5004B9D61 /* CI_macOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI_macOS.xctestplan; sourceTree = "<group>"; };
+		859C63992CE4BDA700777ED8 /* CI_iOS.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI_iOS.xctestplan; sourceTree = "<group>"; };
 		859D54312CFF0403001E9F0A /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		859D543A2CFF0403001E9F0A /* EssentialFeediOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeediOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85CC3FE12CE4B73900A5C7FA /* EssentialFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,7 +207,8 @@
 		85824C5D2CDA49C1005D5D19 = {
 			isa = PBXGroup;
 			children = (
-				859C63992CE4BDA700777ED8 /* CI.xctestplan */,
+				859C63992CE4BDA700777ED8 /* CI_iOS.xctestplan */,
+				8583F8342D1C0DA5004B9D61 /* CI_macOS.xctestplan */,
 				85824C692CDA49C1005D5D19 /* EssentialFeed */,
 				85824C9B2CE0D435005D5D19 /* EssentialFeedTests */,
 				85CC3FE22CE4B73900A5C7FA /* EssentialFeedAPIEndToEndTests */,
