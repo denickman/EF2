@@ -45,6 +45,7 @@ jobs:
             -destination "platform=iOS Simulator,id=9D2136F3-295E-4A21-81F0-739A21996804"
             # SWIFT_TREAT_WARNINGS_AS_ERRORS=YES OTHER_SWIFT_FLAGS="-D ED_SKIP_SWIFT_FORMAT"
 
+
     #   # Шаг 4: Сборка и тестирование для macOS
     #   - name: Build and Test macOS
     #     run: |
