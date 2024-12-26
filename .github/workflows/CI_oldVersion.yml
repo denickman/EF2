@@ -3,8 +3,9 @@ name: CI
 on:
   push:
     branches:
-      - main
-      - feature/image-feed/cache-feed-use-case
+      - branch_name
+      #- main
+      #- feature/image-feed/cache-feed-use-case
 
 jobs:
   # Первое задание: Сборка и тестирование для iOS (EssentialApp)
