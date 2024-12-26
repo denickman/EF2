@@ -11,13 +11,17 @@ import EssentialFeediOS
 
 class SceneDelegateTests: XCTestCase {
     
-    func test_confgireWindow_setWindowAsKeyAndVisible() {
-        let window = UIWindow()
+    func test_confgireWindow_setsWindowAsKeyAndVisible() {
+        let window = UIWindowSpy()
         let sut = SceneDelegate()
         sut.window = window
         
         sut.configureWindow()
-        // TODO: - Check this test
+        // In iOS 15 and later, the value of this property is true when the window is the key window of its scene.
+        // This means, we can only make a UIWindow become key if it's part of a scene.
+        XCTAssertEqual(window.makeKeyAndVisibleCallCount, 1, "Expected to make window key and visible")
+        
+        // do not work it anymore since iOS 15
 //        XCTAssertTrue(window.isKeyWindow, "Expected window to be the key window")
 //        XCTAssertFalse(window.isHidden, "Expected window to be visible")
     }
@@ -34,6 +38,15 @@ class SceneDelegateTests: XCTestCase {
         
         XCTAssertNotNil(rootNavigation, "Expected a navigation controller as root, got \(String(describing: root)) instead")
         XCTAssertTrue(topController is FeedViewController, "Expected a feed controller as top view controller, got \(String(describing: topController)) instead")
+        
+    }
+}
 
+
+private class UIWindowSpy: UIWindow {
+    var makeKeyAndVisibleCallCount = 0
+    
+    override func makeKeyAndVisible() {
+        makeKeyAndVisibleCallCount += 1
     }
 }
