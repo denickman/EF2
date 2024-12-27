@@ -135,9 +135,9 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
         description: String? = nil,
         location: String? = nil,
         imageURL: URL
-    ) -> (model: FeedItem, json: [String : Any]) {
+    ) -> (model: FeedImage, json: [String : Any]) {
         
-        let item = FeedItem(id: id, description: description, location: location, imageURL: imageURL)
+        let item = FeedImage(id: id, description: description, location: location, url: imageURL)
         
         let json = [
           "id": id.uuidString,
@@ -180,41 +180,6 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
         action()
         
         wait(for: [exp], timeout: 1.0)
-    }
-
-    
-    class HTTPClientSpy: HTTPClient {
-        
-        var requestedURLs: [URL] {
-            messages.map { $0.url }
-        }
-        
-        private var messages = [(url: URL, completion: (HTTPClientResult) -> Void)]()
-        
-        func complete(with error: Error, at index: Int = 0) {
-            messages[index].completion(.failure(error))
-        }
-        
-        func complete(
-            withStatusCode code: Int,
-            data: Data,
-            at index: Int = 0
-        ) {
-            
-            let response = HTTPURLResponse(
-                url: requestedURLs[index],
-                statusCode: code,
-                httpVersion: nil,
-                headerFields: nil
-            )!
-            
-            messages[index].completion(.success(data, response))
-        }
-        
-        func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
-            messages.append((url, completion))
-        }
-        
     }
 }
 
