@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Install provisioning profile
-    run: |
+      run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/profile.mobileprovision .github/deployment/profile.mobileprovision.gpg
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp .github/deployment/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
@@ -45,7 +45,7 @@ jobs:
 
     - name: Build
       run: xcodebuild clean archive -sdk iphoneos -workspace EssentialApp/EssentialApp.xcworkspace -configuration "Release" -scheme "EssentialApp" -derivedDataPath "DerivedData" -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
-      
+
     - name: Export
       run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
 
