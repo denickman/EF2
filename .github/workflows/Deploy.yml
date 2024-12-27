@@ -6,10 +6,6 @@ on:
   push:
     branches: [ main ]
 
-  # pull_request:
-  #   branches:
-  #     - main
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build-and-deploy"
@@ -44,8 +40,14 @@ jobs:
     - name: Xcode version
       run: /usr/bin/xcodebuild -version
 
+    - name: List of files
+      run: ls EssentialApp/EssentialApp
+
     - name: Set build number
-      run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/Info.plist"
+      #run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
+      run: |
+        buildNumber=$(($GITHUB_RUN_NUMBER + 1))
+        /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
 
     - name: Build
       run: xcodebuild clean archive -sdk iphoneos -workspace EssentialApp/EssentialApp.xcworkspace -configuration "Release" -scheme "EssentialApp" -derivedDataPath "DerivedData" -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
