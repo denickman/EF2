@@ -22,7 +22,7 @@ jobs:
 
     - name: List of current directories
       run: |
-        ls
+        ls -la
 
     - name: Install provisioning profile
       run: |
