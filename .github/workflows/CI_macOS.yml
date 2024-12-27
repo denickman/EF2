@@ -5,9 +5,9 @@ name: CI-macOS
 on:
   pull_request:
     branches: [ main ]
-  push:
-    branches:
-      feature/image-feed/cache-feed-use-case
+  # push:
+  #   branches:
+  #     feature/image-feed/cache-feed-use-case
 
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
