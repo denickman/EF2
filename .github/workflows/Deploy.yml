@@ -41,8 +41,9 @@ jobs:
     - name: Xcode version
       run: /usr/bin/xcodebuild -version
 
-    - name: List of files
-      run: ls EssentialApp/EssentialApp
+    - name: List of info.plist
+      run: |
+        cat EssentialApp/EssentialApp/Info.plist
 
     - name: Set build number
       #run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
