@@ -54,10 +54,18 @@ jobs:
 
     - name: List of Directories
       run: |
+        pwd
         ls -la
 
     - name: Build
-      run: xcodebuild clean archive -sdk iphoneos -workspace EssentialApp/EssentialApp.xcworkspace -configuration "Release" -scheme "EssentialApp" -derivedDataPath "DerivedData" -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
+      run: |
+        xcodebuild clean archive \
+        -sdk iphoneos \
+        -workspace EssentialApp.xcworkspace \
+        -configuration "Release" \
+        -scheme "EssentialApp" \
+        -derivedDataPath "DerivedData" \
+        -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
 
     - name: Export
       run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
