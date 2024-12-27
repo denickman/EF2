@@ -20,6 +20,10 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v4
 
+    - name: List of current directories
+      run: |
+        ls
+
     - name: Install provisioning profile
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/profile.mobileprovision .github/deployment/profile.mobileprovision.gpg
@@ -65,7 +69,8 @@ jobs:
         -configuration "Release" \
         -scheme "EssentialApp" \
         -derivedDataPath "DerivedData" \
-        -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
+        -archivePath "DerivedData/Archive/EssentialApp.xcarchive" \
+        -allowProvisioningUpdates
 
     # - name: Export
     #   run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
