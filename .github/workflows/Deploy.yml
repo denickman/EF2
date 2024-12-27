@@ -40,6 +40,12 @@ jobs:
         security unlock-keychain -p "" ~/Library/Keychains/build.keychain
         security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
 
+    - name: Debug Provisioning Profile and Keychain
+      run: |
+        security find-identity -p codesigning -v
+        ls ~/Library/MobileDevice/Provisioning\ Profiles
+
+
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode_16.0.app
 
