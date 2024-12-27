@@ -67,8 +67,20 @@ jobs:
         -derivedDataPath "DerivedData" \
         -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
 
-    - name: Export
-      run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
+    # - name: Export
+    #   run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
 
     # - name: Deploy
     #   run: xcrun altool --upload-app --type ios --file "DerivedData/ipa/EssentialApp.ipa" --username "${{ secrets.APPSTORE_USERNAME }}" --password "${{ secrets.APPSTORE_PASSWORD }}" --verbose
+
+
+
+
+
+
+
+
+
+
+# gpg --output certificate.p12.gpg --symmetric --cipher-algo AES256 certificate.p12
+# gpg --output profile.mobileprovision.gpg --symmetric --cipher-algo AES256 profile.mobileprovision
