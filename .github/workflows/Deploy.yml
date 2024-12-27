@@ -1,14 +1,12 @@
+
 name: Deploy
 
 # Controls when the action will run. Triggers the workflow on push events
 # but only for the master branch
 on:
   push:
-    branches: [ main ]
-
-  # pull_request:
-  #   branches:
-  #     - main
+    branches: #[ main ]
+      - feature/image-feed/cache-feed-use-case
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -44,14 +42,21 @@ jobs:
     - name: Xcode version
       run: /usr/bin/xcodebuild -version
 
+    - name: List of info.plist
+      run: |
+        cat EssentialApp/EssentialApp/Info.plist
+
     - name: Set build number
-      run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/Info.plist"
+      #run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
+      run: |
+        buildNumber=$(($GITHUB_RUN_NUMBER + 1))
+        /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
 
-    - name: Build
-      run: xcodebuild clean archive -sdk iphoneos -workspace EssentialApp/EssentialApp.xcworkspace -configuration "Release" -scheme "EssentialApp" -derivedDataPath "DerivedData" -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
-
-    - name: Export
-      run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
-
-    - name: Deploy
-      run: xcrun altool --upload-app --type ios --file "DerivedData/ipa/EssentialApp.ipa" --username "${{ secrets.APPSTORE_USERNAME }}" --password "${{ secrets.APPSTORE_PASSWORD }}" --verbose
+    # - name: Build
+    #   run: xcodebuild clean archive -sdk iphoneos -workspace EssentialApp/EssentialApp.xcworkspace -configuration "Release" -scheme "EssentialApp" -derivedDataPath "DerivedData" -archivePath "DerivedData/Archive/EssentialApp.xcarchive"
+    #
+    # - name: Export
+    #   run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
+    #
+    # - name: Deploy
+    #   run: xcrun altool --upload-app --type ios --file "DerivedData/ipa/EssentialApp.ipa" --username "${{ secrets.APPSTORE_USERNAME }}" --password "${{ secrets.APPSTORE_PASSWORD }}" --verbose
