@@ -6,7 +6,7 @@
 	<string>export</string>
 	<key>method</key>
 	<string>app-store-connect</string>
-	<key>provisioningProfiles</key>
+	<key>prodprofile</key>
 	<dict>
 		<key>com.dyaremenko.EssentialAppCaseStudy</key>
 		<string>Essential App Case Study (Production)</string>
