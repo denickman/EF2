@@ -69,11 +69,13 @@ jobs:
     #     buildNumber=$(($GITHUB_RUN_NUMBER + 1))
     #     /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
 
-    - name: Increment Build Number using agvtool
+    - name: Increment Build Number and Set CFBundleVersion
       run: |
-        ls -la
-        cd EssentialApp
-        agvtool next-version -all
+       echo "Current run number: $GITHUB_RUN_NUMBER"
+       buildNumber=$((GITHUB_RUN_NUMBER + 10))  # Добавьте любое смещение, если хотите
+       /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
+
+
 
     # - name: Set build number
       # run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
