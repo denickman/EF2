@@ -71,7 +71,8 @@ jobs:
 
     - name: Increment Build Number using agvtool
       run: |
-        cd EssentialApp/EssentialApp
+        ls -la
+        cd EssentialApp
         agvtool next-version -all
 
     # - name: Set build number
