@@ -83,6 +83,9 @@ jobs:
         -derivedDataPath "DerivedData" \
         -archivePath "DerivedData/Archive/EssentialApp.xcarchive" \
 
+    - name: Test check existing profile
+      run: ls ~/Library/MobileDevice/Provisioning\ Profiles
+
     - name: Export
       run: xcodebuild -exportArchive -archivePath DerivedData/Archive/EssentialApp.xcarchive -exportOptionsPlist .github/deployment/ExportOptions.plist -exportPath DerivedData/ipa
 
