@@ -64,11 +64,14 @@ jobs:
     #   run: |
     #     cat EssentialApp/EssentialApp/Info.plist
 
+    # - name: Set build number
+    #   #run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
+    #   run: |
+    #     buildNumber=$(($GITHUB_RUN_NUMBER + 1))
+    #     /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
+
     - name: Set build number
-      #run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
-      run: |
-        buildNumber=$(($GITHUB_RUN_NUMBER + 2))
-        /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
+      run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
 
     - name: List of Directories
       run: |
