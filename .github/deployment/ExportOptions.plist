@@ -6,10 +6,10 @@
 	<string>export</string>
 	<key>method</key>
 	<string>app-store-connect</string>
-	<key>prodprofile</key>
+	<key>provisioningProfiles</key>
 	<dict>
 		<key>com.dyaremenko.EssentialAppCaseStudy</key>
-		<string>Essential App Case Study (Production)</string>
+		<string>prodprofile</string>
 	</dict>
 	<key>signingCertificate</key>
 	<string>Apple Distribution</string>
