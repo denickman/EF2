@@ -69,11 +69,24 @@ jobs:
     #     buildNumber=$(($GITHUB_RUN_NUMBER + 1))
     #     /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
 
-    - name: Increment Build Number and Set CFBundleVersion
-      run: |
-       echo "Current run number: $GITHUB_RUN_NUMBER"
-       buildNumber=$((GITHUB_RUN_NUMBER + 10))  # Добавьте любое смещение, если хотите
-       /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
+  - name: Increment Build Number and Set CFBundleVersion
+    run: |
+      echo "Current run number: $GITHUB_RUN_NUMBER"
+      buildNumber=$((GITHUB_RUN_NUMBER + 10))  # Добавьте любое смещение, если хотите
+      echo "New build number: $buildNumber"
+      /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
+
+  # - name: Increment Build Number
+  #   run: |
+  #     # Проверяем, существует ли файл build_version.txt
+  #     if [ ! -f build_version.txt ]; then
+  #       echo "1" > build_version.txt  # Если нет, создаем с начальным значением 1
+  #     fi
+  #     buildNumber=$(cat build_version.txt)
+  #     buildNumber=$((buildNumber + 1))
+  #     echo "New build number: $buildNumber"
+  #     echo $buildNumber > build_version.txt
+  #     /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
 
     # - name: Set build number
       # run: /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "EssentialApp/EssentialApp/Info.plist"
