@@ -30,8 +30,8 @@ jobs:
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp .github/deployment/prodprofile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
-        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/devprofile.mobileprovision .github/deployment/devprofile.mobileprovision.gpg
-        cp .github/deployment/devprofile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+        # gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/devprofile.mobileprovision .github/deployment/devprofile.mobileprovision.gpg
+        # cp .github/deployment/devprofile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
     - name: Install keychain prod certificate
       run: |
@@ -40,8 +40,8 @@ jobs:
         security create-keychain -p "" build.keychain
         security import .github/deployment/dev_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A
 
-        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/prod_certificate.p12 .github/deployment/prod_certificate.p12.gpg
-        security import .github/deployment/prod_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A
+        # gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/prod_certificate.p12 .github/deployment/prod_certificate.p12.gpg
+        # security import .github/deployment/prod_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A
 
         security list-keychains -s ~/Library/Keychains/build.keychain
         security default-keychain -s ~/Library/Keychains/build.keychain
