@@ -24,21 +24,24 @@ jobs:
       run: |
         ls -la
 
-    - name: Install provisioning profile
+    - name: Install provisioning profiles
       run: |
-        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/profile.mobileprovision .github/deployment/profile.mobileprovision.gpg
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/prodprofile.mobileprovision .github/deployment/prodprofile.mobileprovision.gpg
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp .github/deployment/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/devprofile.mobileprovision .github/deployment/devprofile.mobileprovision.gpg
         cp .github/deployment/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
     - name: Install keychain prod certificate
       run: |
         # Дешифруем и импортируем prod сертификат
-        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/certificate.p12 .github/deployment/certificate.p12.gpg
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/dev_certificate.p12 .github/deployment/dev_certificate.p12.gpg
         security create-keychain -p "" build.keychain
-        security import .github/deployment/certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A
+        security import .github/deployment/dev_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A
 
-        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/certificate_dev.p12 .github/deployment/certificate_dev.p12.gpg
-        security import .github/deployment/certificate_dev.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A
+        gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/prod_certificate.p12 .github/deployment/prod_certificate.p12.gpg
+        security import .github/deployment/prod_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.CERTIFICATE_PASSWORD }}" -A
 
         security list-keychains -s ~/Library/Keychains/build.keychain
         security default-keychain -s ~/Library/Keychains/build.keychain
@@ -50,7 +53,6 @@ jobs:
       run: |
         security find-identity -p codesigning -v
         ls ~/Library/MobileDevice/Provisioning\ Profiles
-
 
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode_16.0.app
@@ -101,5 +103,9 @@ jobs:
 
 
 
-# gpg --output certificate.p12.gpg --symmetric --cipher-algo AES256 certificate.p12
-# gpg --output profile.mobileprovision.gpg --symmetric --cipher-algo AES256 profile.mobileprovision
+# gpg --output dev_certificate.p12.gpg --symmetric --cipher-algo AES256 development.p12
+# gpg --output prod_certificate.p12.gpg --symmetric --cipher-algo AES256 distribution.p12
+
+
+# gpg --output devprofile.mobileprovision.gpg --symmetric --cipher-algo AES256 devProfile.mobileprovision
+# gpg --output prodprofile.mobileprovision.gpg --symmetric --cipher-algo AES256 prodProfile.mobileprovision
