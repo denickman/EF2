@@ -28,10 +28,10 @@ jobs:
       run: |
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/prodprofile.mobileprovision .github/deployment/prodprofile.mobileprovision.gpg
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-        cp .github/deployment/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+        cp .github/deployment/prodprofile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
         gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.SECRET_KEY }}" --output .github/deployment/devprofile.mobileprovision .github/deployment/devprofile.mobileprovision.gpg
-        cp .github/deployment/profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+        cp .github/deployment/devprofile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
     - name: Install keychain prod certificate
       run: |
