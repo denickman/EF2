@@ -72,10 +72,10 @@ jobs:
     - name: Increment Build Number and Set CFBundleVersion
       run: |
         echo "Current run number: $GITHUB_RUN_NUMBER"
-        buildNumber=$((GITHUB_RUN_NUMBER + 10))  # Добавьте любое смещение, если хотите
+        buildNumber=$((GITHUB_RUN_NUMBER + 10))
         echo "New build number: $buildNumber"
         /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
-        echo "Current NUMBER"
+        echo "Current NUMBER:"
         /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "EssentialApp/EssentialApp/Info.plist"
 
 
@@ -124,3 +124,6 @@ jobs:
 
 # gpg --output devprofile.mobileprovision.gpg --symmetric --cipher-algo AES256 devProfile.mobileprovision
 # gpg --output prodprofile.mobileprovision.gpg --symmetric --cipher-algo AES256 prodProfile.mobileprovision
+
+
+# pcji-hchb-pixa-azan
