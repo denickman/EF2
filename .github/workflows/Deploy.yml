@@ -71,7 +71,7 @@ jobs:
     - name: Increment Build Number and Set CFBundleVersion
       run: |
         echo "Current run number: $GITHUB_RUN_NUMBER"
-        buildNumber=$((GITHUB_RUN_NUMBER + 10))
+        buildNumber=$((GITHUB_RUN_NUMBER + 1))
         echo "New build number: $buildNumber"
         /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "EssentialApp/EssentialApp/Info.plist"
         echo "Current NUMBER:"
