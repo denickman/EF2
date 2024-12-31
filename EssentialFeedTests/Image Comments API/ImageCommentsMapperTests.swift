@@ -8,19 +8,19 @@
 import XCTest
 import EssentialFeed
 
-final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
+final class ImageCommentsMapperTests: XCTestCase {
     
-    func test_load_deliversErrorOnNon2xxHTTPResponse() {
+    func test_load_deliversErrorOnNon2xxHTTPResponse() throws {
         // check 199, 201, 300, 400, 500 statuses
         
         let (client, sut) = makeSut()
         let samples = [150, 199, 300, 400, 500]
+        let json = makeItemsJSON([])
         
-        samples.enumerated().forEach { index, code in
-            expect(sut, toCompleteWithResult: failure(.invalidData)) {
-                let data = makeItemsJSON([])
-                client.complete(withStatusCode: code, data: data, at: index)
-            }
+        try samples.forEach { code in
+           XCTAssertThrowsError(
+            try ImageCommentsMapper.map(json, from: HTTPURLResponse(statusCode: code))
+            )
         }
     }
     
