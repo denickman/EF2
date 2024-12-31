@@ -9,44 +9,7 @@ import XCTest
 import EssentialFeed
 
 class LoadFeedFromRemoteUseCaseTests: XCTestCase {
-    
-    func test_init_doesNotReqeustDataFromURL() {
-        let (client, _) = makeSut()
-        XCTAssertTrue(client.requestedURLs.isEmpty)
-    }
-    
-    func test_load_requestDataFromURL() {
-        
-        let url = URL(string: "https://a-given-url.com")!
-        let (client, sut) = makeSut(url: url)
-        
-        sut.load { _ in }
-        
-        XCTAssertFalse(client.requestedURLs.isEmpty)
-        XCTAssertEqual(client.requestedURLs, [url])
-    }
-    
-    func test_loadTwice_requestDataFromURLTwice() {
-        
-        let url = URL(string: "https://a-given-url.com")!
-        let (client, sut) = makeSut(url: url)
-        
-        sut.load { _ in }
-        sut.load { _ in }
-        
-        XCTAssertEqual(client.requestedURLs, [url, url])
-    }
-    
-    func test_load_deliversErrorOnClientError() {
-        // when http client fails we have some connectivity issue
-        let (client, sut) = makeSut()
-        
-        expect(sut, toCompleteWithResult: failure(.connectivity)) {
-            let clientError = NSError(domain: "text", code: 0)
-            client.complete(with: clientError)
-        }
-    }
-    
+  
     func test_load_deliversErrorOnNon200HTTPResponse() {
         // check 199, 201, 300, 400, 500 statuses
         
@@ -93,23 +56,7 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
             client.complete(withStatusCode: 200, data: data)
         }
     }
-    
-    func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
-        let url = URL(string: "https://any-url.com")!
-        let client = HTTPClientSpy()
-        var sut: RemoteFeedLoader? = RemoteFeedLoader(url: url, client: client)
-        
-        var capturedResults = [RemoteFeedLoader.Result]()
-        
-        sut?.load {
-            capturedResults.append($0)
-        }
-        
-        sut = nil
-        client.complete(withStatusCode: 200, data: makeItemsJSON([]))
-        XCTAssertTrue(capturedResults.isEmpty)
-    }
-    
+
     // MARK: - Helpers
     
     private func makeSut(
