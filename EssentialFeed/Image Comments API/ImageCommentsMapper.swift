@@ -36,6 +36,7 @@ final class ImageCommentsMapper {
         guard isOK(response), let root = try? decoder.decode(Root.self, from: data) else {
             throw RemoteImageCommentsLoader.Error.invalidData
         }
+    
         return root.comments
     }
     

@@ -17,7 +17,7 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
     
     func test_load_requestDataFromURL() {
         
-        let url = URL.init(string: "https://a-given-url.com")!
+        let url = URL(string: "https://a-given-url.com")!
         let (client, sut) = makeSut(url: url)
         
         sut.load { _ in }
@@ -28,7 +28,7 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
     
     func test_loadTwice_requestDataFromURLTwice() {
         
-        let url = URL.init(string: "https://a-given-url.com")!
+        let url = URL(string: "https://a-given-url.com")!
         let (client, sut) = makeSut(url: url)
         
         sut.load { _ in }
