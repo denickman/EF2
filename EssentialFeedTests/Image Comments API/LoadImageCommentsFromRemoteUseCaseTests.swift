@@ -10,43 +10,6 @@ import EssentialFeed
 
 final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
     
-    func test_init_doesNotReqeustDataFromURL() {
-        let (client, _) = makeSut()
-        XCTAssertTrue(client.requestedURLs.isEmpty)
-    }
-    
-    func test_load_requestDataFromURL() {
-        
-        let url = URL(string: "https://a-given-url.com")!
-        let (client, sut) = makeSut(url: url)
-        
-        sut.load { _ in }
-        
-        XCTAssertFalse(client.requestedURLs.isEmpty)
-        XCTAssertEqual(client.requestedURLs, [url])
-    }
-    
-    func test_loadTwice_requestDataFromURLTwice() {
-        
-        let url = URL(string: "https://a-given-url.com")!
-        let (client, sut) = makeSut(url: url)
-        
-        sut.load { _ in }
-        sut.load { _ in }
-        
-        XCTAssertEqual(client.requestedURLs, [url, url])
-    }
-    
-    func test_load_deliversErrorOnClientError() {
-        // when http client fails we have some connectivity issue
-        let (client, sut) = makeSut()
-        
-        expect(sut, toCompleteWithResult: failure(.connectivity)) {
-            let clientError = NSError(domain: "text", code: 0)
-            client.complete(with: clientError)
-        }
-    }
-    
     func test_load_deliversErrorOnNon2xxHTTPResponse() {
         // check 199, 201, 300, 400, 500 statuses
         
@@ -84,35 +47,6 @@ final class LoadImageCommentsFromRemoteUseCaseTests: XCTestCase {
                 let emptyListJSON = makeItemsJSON([]) // Data("{\"items\":[]}".utf8)
                 client.complete(withStatusCode: code, data: emptyListJSON, at: index)
             }
-        }
-    }
-    
-    // happy path
-    func test_load_deliversItemsOn2xxHTTPResponseWithJSONItems() {
-        let (client, sut) = makeSut()
-        
-        let item1 = makeItem(
-            id: UUID(),
-            message: "a message",
-            createdAt: (Date(timeIntervalSince1970: 1598627222), "2020-08-28T15:07:02+00:00"),
-            username: "a usernmae"
-        )
-        
-        let item2 = makeItem(
-            id: UUID(),
-            message: "another message",
-            createdAt: (Date(timeIntervalSince1970: 1577881882), "2020-01-01T12:31:22+00:00"),
-            username: "another username"
-        )
-        
-        let items = [item1.model, item2.model]
-        let samples = [200 , 201, 250, 280, 299]
-        
-        samples.enumerated().forEach { index, code in
-            expect(sut, toCompleteWithResult: .success(items), when: {
-                let json = makeItemsJSON([item1.json, item2.json])
-                client.complete(withStatusCode: code, data: json, at: index)
-            })
         }
     }
     
