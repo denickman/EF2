@@ -68,6 +68,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Feed Cache/Helpers/FeedCacheTestHelpersFile.swift",
+				Helpers/SharedLocalizationTestHelpers.swift,
 				Helpers/SharedTestHelpers.swift,
 				"Helpers/XCTestCase+MemoryLeakTrackingHelper.swift",
 			);
@@ -83,6 +84,7 @@
 		859C63792CE4BC2800777ED8 /* Exceptions for "EssentialFeedTests" folder in "EssentialFeedAPIEndToEndTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Helpers/SharedLocalizationTestHelpers.swift,
 				Helpers/SharedTestHelpers.swift,
 				"Helpers/XCTestCase+MemoryLeakTrackingHelper.swift",
 			);
@@ -91,6 +93,7 @@
 		859D54D12CFF298A001E9F0A /* Exceptions for "EssentialFeedTests" folder in "EssentialFeediOSTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Helpers/SharedLocalizationTestHelpers.swift,
 				"Helpers/XCTestCase+MemoryLeakTrackingHelper.swift",
 			);
 			target = 859D54392CFF0403001E9F0A /* EssentialFeediOSTests */;
