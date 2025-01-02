@@ -54,8 +54,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func configureWindow() {
         //  let url = URL(string: "https://ile-api.essentialdeveloper.com/essential-feed/v1/feed")!
-        /// Not actual anymore since we comment EssentialAppUIAcceptanceTests
-        //        let remoteClient = makeRemoteClient()
         
         let feedViewController = FeedUIComposer.feedComposedWith(
             feedLoader: makeRemoteFeedLoaderWithLocalFallback,
@@ -70,13 +68,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         localFeedLoader.validateCache { _ in }
     }
     
-    /// Not actual anymore since we comment EssentialAppUIAcceptanceTests
-    //    func makeRemoteClient() -> HTTPClient {
-    //        return httpClient
-    //    }
-    
     private func makeRemoteFeedLoaderWithLocalFallback() ->  AnyPublisher<[FeedImage], Error> {
         remoteFeedLoader
+//            .delay(for: 2, scheduler: DispatchQueue.main)
             .tryMap(FeedItemsMapper.map)
             .caching(to: localFeedLoader)
             .fallback(to: localFeedLoader.loadPublisher)
@@ -88,6 +82,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         return localImageLoader
             .loadImageDataPublisher(from: url)
+//            .delay(for: 2, scheduler: DispatchQueue.main)
             .fallback(to: {
                 remoteImageLoader
                     .loadImageDataPublisher(from: url)
