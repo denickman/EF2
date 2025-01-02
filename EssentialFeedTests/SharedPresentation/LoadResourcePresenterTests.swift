@@ -16,10 +16,10 @@ final class LoadResourcePresenterTests: XCTestCase {
         XCTAssertTrue(view.messages.isEmpty, "Expected no view messages")
     }
     
-    func test_didStartLoadingFeed_displaysNoErrorMessageAndStartsLoading() {
+    func test_didStartLoading_displaysNoErrorMessageAndStartsLoading() {
         // test didStartLoadingFeed event
         let (sut, view) = makeSUT()
-        sut.didStartLoadingFeed()
+        sut.didStartLoading()
         XCTAssertEqual(view.messages, [
             .display(errorMessage: .none),
             .display(isLoading: true)
@@ -31,7 +31,7 @@ final class LoadResourcePresenterTests: XCTestCase {
         let (sut, view) = makeSUT()
         let feed = uniqueImagesFeed().models
         
-        sut.didFinishLoadingFeed(with: feed)
+        sut.didFinishLoading(with: feed)
         
         XCTAssertEqual(view.messages, [
             .display(feed: feed),
@@ -42,7 +42,7 @@ final class LoadResourcePresenterTests: XCTestCase {
     func test_didFinishLoadingFeedWithError_displaysLocalizedErrorMessageAndStopsLoading() {
         // test finish loading feed case
         let (sut, view) = makeSUT()
-        sut.didFinishLoadingFeed(with: anyNSError())
+        sut.didFinishLoading(with: anyNSError())
         
         XCTAssertEqual(view.messages, [
             .display(errorMessage: localized("FEED_VIEW_CONNECTION_ERROR")),
@@ -95,8 +95,4 @@ final class LoadResourcePresenterTests: XCTestCase {
         }
         return value
     }
-    
-
-
-
 }
