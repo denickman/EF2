@@ -88,12 +88,12 @@ final class LoadResourcePresenterTests: XCTestCase {
         
         private(set) var messages = Set<Message>()
         
-        // FeedErrorView
+        // ErrorView
         func display(_ viewModel: ResourceErrorViewModel) {
             messages.insert(.display(errorMessage: viewModel.message))
         }
         
-        // FeedLoadingView
+        // LoadingView
         func display(_ viewModel: ResourceLoadingViewModel) {
             messages.insert(.display(isLoading: viewModel.isLoading))
         }
