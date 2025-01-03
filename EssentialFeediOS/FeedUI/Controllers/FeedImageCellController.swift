@@ -32,9 +32,12 @@ public final class FeedImageCellController: FeedImageView, ResourceView, Resourc
         cell?.locationContainer.isHidden = !viewModel.hasLocation
         cell?.locationLabel.text = viewModel.location
         cell?.descriptionLabel.text = viewModel.description
+        cell?.onRetry = delegate.didRequestImage
         
         /// accessibilityIdentifier 'feed-image-cell' for EssentialAppUIAcceptanceTests
-        self.cell?.accessibilityIdentifier = "feed-image-cell"
+        cell?.accessibilityIdentifier = "feed-image-cell"
+        /// accessibilityIdentifier 'feed-image' for EssentialAppUIAcceptanceTests
+        cell?.feedImageView.accessibilityIdentifier = "feed-image"
         
         delegate.didRequestImage()
         return cell!
@@ -50,10 +53,7 @@ public final class FeedImageCellController: FeedImageView, ResourceView, Resourc
     }
     
     public func display(_ viewModel: FeedImageViewModel<UIImage>) {
-        /// accessibilityIdentifier 'feed-image' for EssentialAppUIAcceptanceTests
-        cell?.feedImageView.accessibilityIdentifier = "feed-image"
-        cell?.feedImageView.image = viewModel.image
-        cell?.onRetry = delegate.didRequestImage
+  
     }
     
     func releaseCellForReuse() {

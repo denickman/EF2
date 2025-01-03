@@ -50,7 +50,7 @@ public final class LoadResourcePresenter<Resource, View: ResourceView> {
 
     public func didFinishLoading(with resource: Resource) {
         do {
-            resourceView.display(try mapper(resource))
+            resourceView.display(try mapper(resource)) 
             loadingView.display(ResourceLoadingViewModel(isLoading: false))
         } catch {
             didFinishLoading(with: error)
