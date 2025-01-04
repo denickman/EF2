@@ -41,7 +41,7 @@ extension Date {
     }
     
     func adding(minutes: Int) -> Date {
-        Calendar(identifier: .gregorian).date(byAdding: .day, value: minutes, to: self)!
+        Calendar(identifier: .gregorian).date(byAdding: .minute, value: minutes, to: self)!
     }
     
 }
