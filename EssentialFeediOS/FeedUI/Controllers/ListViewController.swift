@@ -28,7 +28,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     
     private var loadingControllers = [IndexPath : CellController]()
     
-    public var delegate: FeedViewControllerDelegate?
+    public var onRefresh: (() -> Void)?
     
     private var tableModel = [CellController]() {
         didSet {
@@ -49,7 +49,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     }
     
     @IBAction private func refresh() {
-        delegate?.didRequestFeedRefresh()
+        onRefresh?()
     }
     
     public func display(_ cellControllers: [CellController]) {
