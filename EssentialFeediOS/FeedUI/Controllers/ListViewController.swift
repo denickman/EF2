@@ -18,7 +18,7 @@ public protocol CellController {
     func cancelLoad()
 }
 
-public final class FeedViewController: UITableViewController, UITableViewDataSourcePrefetching {
+public final class ListViewController: UITableViewController, UITableViewDataSourcePrefetching {
     
     // MARK: - IBOutlets
     
@@ -93,13 +93,13 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
     }
 }
 
-extension FeedViewController: ResourceLoadingView {
+extension ListViewController: ResourceLoadingView {
     public func display(_ viewModel: ResourceLoadingViewModel) {
         refreshControl?.update(isRefreshing: viewModel.isLoading)
     }
 }
 
-extension FeedViewController: ResourceErrorView {
+extension ListViewController: ResourceErrorView {
     public func display(_ viewModel: ResourceErrorViewModel) {
         errorView?.message = viewModel.message
     }

@@ -351,7 +351,7 @@ final class FeedUIIntegrationTests: XCTestCase {
         UIImage.make(withColor: .red).pngData()!
     }
     
-    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
+    func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
         let sut = FeedUIComposer.feedComposedWith(feedLoader: loader.loadPublisher, imageLoader: loader.loadImageDataPublisher)
         trackForMemoryLeaks(loader)
@@ -379,7 +379,7 @@ private class FakeRefreshControl: UIRefreshControl {
     }
 }
 
-private extension FeedViewController {
+private extension ListViewController {
     func replaceRefreshControlWithFakeForiOS17Support() {
         let fake = FakeRefreshControl()
         
