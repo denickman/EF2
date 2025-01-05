@@ -6,26 +6,11 @@
 //
 
 import XCTest
-import EssentialApp
 import EssentialFeediOS
 @testable import EssentialFeed // in order to not create public init for FeedImageViewModel
 
-
 class FeedSnapshotTests: XCTestCase {
-    
-    func test_emptyFeed() {
-        let sut = makeSUT()
-        sut.display(emptyFeed())
-        
-        // record
-        //        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "EMPTY_FEED_light")
-        //        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "EMPTY_FEED_dark")
-        
-        // assert
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "EMPTY_FEED_light")
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "EMPTY_FEED_dark")
-    }
-    
+
     func test_feedWithContent() {
         let sut = makeSUT()
         sut.display(feedWithContent())
@@ -35,23 +20,11 @@ class FeedSnapshotTests: XCTestCase {
         //        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_CONTENT_dark")
         
         // assert
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_CONTENT_light")
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_CONTENT_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_CONTENT_light")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_CONTENT_dark")
     }
     
-    func test_feedWithErrorMessage() {
-        let sut = makeSUT()
-        sut.display(.error(message: "This is a\nmulti-line\nerror message"))
-        
-        // record
-        //        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_ERROR_MESSAGE_light")
-        //        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_ERROR_MESSAGE_dark")
-        
-        // assert
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_ERROR_MESSAGE_light")
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_ERROR_MESSAGE_dark")
-    }
-    
+
     func test_feedWithFailedImageLoading() {
         // it should show the retry button
         let sut = makeSUT()
@@ -62,8 +35,8 @@ class FeedSnapshotTests: XCTestCase {
         //        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
         
         // assert
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
     }
     
     // MARK: - Helpers
@@ -78,10 +51,6 @@ class FeedSnapshotTests: XCTestCase {
         controller.tableView.showsHorizontalScrollIndicator = false
         
         return controller
-    }
-    
-    private func emptyFeed() -> [FeedImageCellController] {
-        []
     }
     
     private func feedWithContent() -> [ImageStub] {
