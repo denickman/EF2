@@ -13,12 +13,10 @@ public protocol FeedViewControllerDelegate {
 }
 
 public final class ListViewController: UITableViewController, UITableViewDataSourcePrefetching {
-    
-    // MARK: - IBOutlets
-    
-    @IBOutlet private(set) public var errorView: ErrorView?
-    
+
     // MARK: - Properties
+    
+    private(set) public var errorView = ErrorView()
     
     public var onRefresh: (() -> Void)?
     
@@ -102,6 +100,6 @@ extension ListViewController: ResourceLoadingView {
 
 extension ListViewController: ResourceErrorView {
     public func display(_ viewModel: ResourceErrorViewModel) {
-        errorView?.message = viewModel.message
+        errorView.message = viewModel.message
     }
 }
