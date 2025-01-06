@@ -14,8 +14,11 @@ public protocol FeedViewControllerDelegate {
 
 public protocol CellController {
     func view(in tableView: UITableView) -> UITableViewCell
-    func preload()
-    func cancelLoad()
+}
+
+public extension CellController {
+    func preload() {}
+    func cancelLoad() {}
 }
 
 public final class ListViewController: UITableViewController, UITableViewDataSourcePrefetching {
@@ -26,10 +29,10 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     
     // MARK: - Properties
     
-    private var loadingControllers = [IndexPath : CellController]()
-    
     public var onRefresh: (() -> Void)?
-    
+
+    private var loadingControllers = [IndexPath : CellController]()
+
     private var tableModel = [CellController]() {
         didSet {
             tableView.reloadData()

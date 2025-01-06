@@ -28,15 +28,7 @@ extension ImageCommentCellController: CellController {
         cell.usernameLabel.text = model.username
         cell.dateLabel.text = model.date
         
-        
         return cell
     }
-    
-    public func preload() {
-        
-    }
-    
-    public func cancelLoad() {
-        
-    } 
+
 }

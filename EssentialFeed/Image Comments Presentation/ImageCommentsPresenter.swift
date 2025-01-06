@@ -46,11 +46,11 @@ public final class ImageCommentsPresenter {
         formatter.calendar = calendar
         
         return ImageCommentsViewModel(comments: comments.map { comment in
-                ImageCommentViewModel(
-                    message: comment.message,
-                    date: formatter.localizedString(for: comment.createdAt, relativeTo: currentDate),
-                    username: comment.username
-                )
-            })
+            ImageCommentViewModel(
+                message: comment.message,
+                date: formatter.localizedString(for: comment.createdAt, relativeTo: currentDate),
+                username: comment.username
+            )
+        })
     }
 }
