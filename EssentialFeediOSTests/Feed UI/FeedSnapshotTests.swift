@@ -27,7 +27,6 @@ class FeedSnapshotTests: XCTestCase {
 
     }
     
-
     func test_feedWithFailedImageLoading() {
         // it should show the retry button
         let sut = makeSUT()
