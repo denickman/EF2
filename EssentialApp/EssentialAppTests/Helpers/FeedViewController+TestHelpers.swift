@@ -22,6 +22,12 @@ extension ListViewController {
         return 0
     }
     
+    override public func loadViewIfNeeded() {
+        super.loadViewIfNeeded()
+        // to prevent loading cells ahead of time with diffable data source
+        tableView.frame = CGRect.init(x: 0, y: 0, width: 1, height: 1)
+    }
+    
     func simulateUserInitiatedFeedReload() {
         refreshControl?.simulatePullToRefresh()
     }
@@ -63,7 +69,7 @@ extension ListViewController {
     func numberOfRenderedFeedImageViews() -> Int {
         /// tableView.reloadData does not force an immediate layout update
         /// 'didEndDisplayingCell' will only be called in the next layout cycle
-        return tableView.numberOfRows(inSection: feedImagesSection)
+        tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
     }
     
     func feedImageView(at row: Int) -> UITableViewCell? {

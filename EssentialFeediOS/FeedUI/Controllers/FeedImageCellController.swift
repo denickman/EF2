@@ -82,6 +82,12 @@ extension FeedImageCellController: UITableViewDataSource, UITableViewDelegate, U
         return cell!
     }
     
+    // this method will be called only when cell is going to be rendered on visible screen
+    // if you do not have a good estimated cell size you can add logic to this method
+//    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        delegate.didRequestImage()
+//    }
+    
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         delegate.didRequestImage()
     }
