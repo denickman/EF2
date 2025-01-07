@@ -59,8 +59,8 @@ public final class ErrorView: UIButton {
         titleLabel?.textColor = .white
         titleLabel?.textAlignment = .center
         titleLabel?.numberOfLines = 0
-        titleLabel?.font = .systemFont(ofSize: 17)
-//        contentEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        titleLabel?.font = .preferredFont(forTextStyle: .body) // .systemFont(ofSize: 17)
+        titleLabel?.adjustsFontForContentSizeCategory = true
     }
     
     private func configure() {
