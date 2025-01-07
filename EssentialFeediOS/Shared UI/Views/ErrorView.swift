@@ -28,14 +28,7 @@ public final class ErrorView: UIButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    // MARK: - Lifecycle
-    
-    public override func awakeFromNib() {
-        super.awakeFromNib()
-        hideMessage()
-    }
-    
+
     // MARK: - Methods
     
     private func setMessageAnimated(_ message: String?) {
@@ -79,7 +72,7 @@ public final class ErrorView: UIButton {
     
     // MARK: - Actions
     
-    @IBAction private func hideMessageAnimated() {
+    @objc private func hideMessageAnimated() {
         UIView.animate(
             withDuration: 0.25,
             animations: { self.alpha = 0 },
