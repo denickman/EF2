@@ -31,8 +31,8 @@ class FeedSnapshotTests: XCTestCase {
         sut.display(feedWithFailedImageLoading())
         
         // record
-        //        record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
-        //        record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
+//                record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
+//                record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
         
         // assert
         assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
@@ -98,7 +98,10 @@ struct SnapshotConfiguration {
     let layoutMargins: UIEdgeInsets
     let traitCollection: UITraitCollection
     
-    static func iPhone8(style: UIUserInterfaceStyle) -> SnapshotConfiguration {
+    static func iPhone8(
+        style: UIUserInterfaceStyle,
+        contentSize: UIContentSizeCategory = .medium
+    ) -> SnapshotConfiguration {
         SnapshotConfiguration(
             size: CGSize(width: 375, height: 667),
             safeAreaInsets: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0),
@@ -106,7 +109,7 @@ struct SnapshotConfiguration {
             traitCollection: UITraitCollection(traitsFrom: [
                 .init(forceTouchCapability: .available),
                 .init(layoutDirection: .leftToRight),
-                .init(preferredContentSizeCategory: .medium),
+                .init(preferredContentSizeCategory: contentSize),
                 .init(userInterfaceIdiom: .phone),
                 .init(horizontalSizeClass: .compact),
                 .init(verticalSizeClass: .regular),
