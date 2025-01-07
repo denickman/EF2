@@ -17,9 +17,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     // MARK: - Properties
     
     private(set) public var errorView = ErrorView()
-    
     public var onRefresh: (() -> Void)?
-    
     private var loadingControllers = [IndexPath : CellController]()
     
     private var tableModel = [CellController]() {
@@ -32,6 +30,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        configureErrorView()
         refresh()
     }
     
@@ -47,6 +46,28 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     public func display(_ cellControllers: [CellController]) {
         loadingControllers = [:]
         tableModel = cellControllers
+    }
+    
+    private func configureErrorView() {
+        let container = UIView()
+        container.backgroundColor = .clear
+        container.addSubview(errorView)
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            errorView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8),
+            errorView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -8),
+            errorView.topAnchor.constraint(equalTo: container.topAnchor, constant: 8),
+            errorView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -8),
+        ])
+        
+        tableView.tableHeaderView = container
+        
+        errorView.onHide = { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.sizeTableHeaderToFit()
+            self?.tableView.endUpdates()
+        }
     }
     
     // MARK: - TableView Data Source + Delegate

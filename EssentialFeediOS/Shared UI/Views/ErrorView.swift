@@ -5,22 +5,14 @@
 //  Created by Denis Yaremenko on 12.12.2024.
 //
 
-
 import UIKit
 
-public final class ErrorView: UIView {
+public final class ErrorView: UIButton {
     
-    private lazy var label: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 17)
-        return label
-    }()
+    public var onHide: (() -> Void)?
     
     public var message: String? {
-        get { return isVisible ? label.text : nil }
+        get { return isVisible ? title(for: .normal) : nil }
         set { setMessageAnimated(newValue) }
     }
     
@@ -55,32 +47,32 @@ public final class ErrorView: UIView {
     }
     
     private func showAnimated(_ message: String) {
-        label.text = message
-        
+        setTitle(message, for: .normal)
+        contentEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+
         UIView.animate(withDuration: 0.25) {
             self.alpha = 1
         }
     }
     
     private func hideMessage() {
-        label.text = nil
+        setTitle(nil, for: .normal)
         alpha = 0
+        contentEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+        onHide?()
     }
     
     private func configureLabel() {
-        addSubview(label)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            label.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8)
-        ])
+        titleLabel?.textColor = .white
+        titleLabel?.textAlignment = .center
+        titleLabel?.numberOfLines = 0
+        titleLabel?.font = .systemFont(ofSize: 17)
+//        contentEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
     }
     
     private func configure() {
         backgroundColor = .errorBackgroundColor
+        addTarget(self, action: #selector(hideMessageAnimated), for: .touchUpInside)
         configureLabel()
         hideMessage()
     }

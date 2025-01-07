@@ -11,18 +11,18 @@ import EssentialFeediOS
 
 class ImageCommentsSnapshotTests: XCTestCase {
     
-    func test_listWithComments() {
+    func test_listWithComments() {  
         
         let sut = makeSUT()
         sut.display(comments())
         
         // record
-                assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "IMAGE_COMMENTS_light")
-                assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "IMAGE_COMMENTS_dark")
+//                record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "IMAGE_COMMENTS_light")
+//                record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "IMAGE_COMMENTS_dark")
         
         // assert
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "IMAGE_COMMENTS_light")
-//        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "IMAGE_COMMENTS_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "IMAGE_COMMENTS_light")
+        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "IMAGE_COMMENTS_dark")
     }
     
     // MARK: - Helpers
@@ -75,4 +75,3 @@ class ImageCommentsSnapshotTests: XCTestCase {
     }
     
 }
-

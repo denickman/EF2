@@ -9,6 +9,19 @@ import UIKit
 import EssentialFeediOS
 
 extension ListViewController {
+
+    var errorMessage: String? {
+        return errorView.message
+    }
+    
+    var isShowingLoadingIndicator: Bool {
+        return refreshControl?.isRefreshing == true
+    }
+    
+    private var feedImagesSection: Int {
+        return 0
+    }
+    
     func simulateUserInitiatedFeedReload() {
         refreshControl?.simulatePullToRefresh()
     }
@@ -46,15 +59,7 @@ extension ListViewController {
     func renderedFeedImageData(at index: Int) -> Data? {
         return simulateFeedImageViewVisible(at: index)?.renderedImage
     }
-    
-    var errorMessage: String? {
-        return errorView?.message
-    }
-    
-    var isShowingLoadingIndicator: Bool {
-        return refreshControl?.isRefreshing == true
-    }
-    
+
     func numberOfRenderedFeedImageViews() -> Int {
         /// tableView.reloadData does not force an immediate layout update
         /// 'didEndDisplayingCell' will only be called in the next layout cycle
@@ -68,8 +73,8 @@ extension ListViewController {
         let index = IndexPath(row: row, section: feedImagesSection)
         return ds?.tableView(tableView, cellForRowAt: index)
     }
-    
-    private var feedImagesSection: Int {
-        return 0
+
+    func simulateErrorViewTap() {
+        errorView.simulateTap()
     }
 }
