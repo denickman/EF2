@@ -121,6 +121,18 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         assertThatt(sut, isRendering: [comment])
     }
     
+    func test_loadCommentsCompletion_dispatchFromBackgroundToMainThread() {
+        let (sut, loader) = makeSUTT()
+        sut.loadViewIfNeeded()
+        
+        let exp = expectation(description: "Wait for completion")
+        DispatchQueue.global().async {
+            loader.completeCommentsLoading(at: 0)
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1.0)
+    }
+
     override func test_loadFeedCompletion_rendersErrorMessageOnErrorUntilNextReload() {
         let (sut, loader) = makeSUTT()
         
@@ -177,7 +189,6 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
             XCTAssertEqual(sut.commentUsername(at: index), comment.username, "usernmane at \(index)", file: file, line: line)
 
         }
-        
     }
     
     private class LoaderSpy {
