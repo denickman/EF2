@@ -10,34 +10,35 @@ import UIKit
 import EssentialApp
 import EssentialFeed
 import EssentialFeediOS
+import Combine
 
 final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     
      func test_commentsView_hasTitle() {
-        let (sut, _) = makeSUT()
+        let (sut, _) = makeSUTT()
         sut.loadViewIfNeeded()
         XCTAssertEqual(sut.title, commentsTitle)
     }
     
-    override func test_loadFeedActions_requestFeedFromLoader() {
-        let (sut, loader) = makeSUT()
-        XCTAssertEqual(loader.loadFeedCallCount, 0, "Expected no loading requests before view is loaded")
+    func test_loadCommentsAction_requestCommentsFromLoader() {
+        let (sut, loader) = makeSUTT()
+        XCTAssertEqual(loader.loadCommentsCallCount, 0, "Expected no loading requests before view is loaded")
         
         sut.loadViewIfNeeded()
-        XCTAssertEqual(loader.loadFeedCallCount, 1, "Expected a loading request once view is loaded")
+        XCTAssertEqual(loader.loadCommentsCallCount, 1, "Expected a loading request once view is loaded")
         
-        sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadFeedCallCount, 2, "Expected another loading request once user initiates a reload")
+        sut.simulateUserInitiatedReload()
+        XCTAssertEqual(loader.loadCommentsCallCount, 2, "Expected another loading request once user initiates a reload")
         
-        sut.simulateUserInitiatedFeedReload()
-        XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected yet another loading request once user initiates another reload")
+        sut.simulateUserInitiatedReload()
+        XCTAssertEqual(loader.loadCommentsCallCount, 3, "Expected yet another loading request once user initiates another reload")
     }
     
     override func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
         
         // https://academy.essentialdeveloper.com/courses/1112681/lectures/50273453
         
-        let (sut, loader) = makeSUT()
+        let (sut, loader) = makeSUTT()
         sut.loadViewIfNeeded()
         sut.replaceRefreshControlWithFakeForiOS17Support()
         
@@ -80,7 +81,7 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         let image1 = makeImage(description: nil, location: "another location")
         let image2 = makeImage(description: "another description", location: nil)
         let image3 = makeImage(description: nil, location: nil)
-        let (sut, loader) = makeSUT()
+        let (sut, loader) = makeSUTT()
         
         sut.loadViewIfNeeded()
         assertThat(sut, isRendering: [])
@@ -88,7 +89,7 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
         
-        sut.simulateUserInitiatedFeedReload()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoading(with: [image0, image1, image2, image3], at: 1)
         assertThat(sut, isRendering: [image0, image1, image2, image3])
     }
@@ -107,7 +108,7 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         assertThat(sut, isRendering: [image0, image1])
         
         // load again but receive an empty image models
-        sut.simulateUserInitiatedFeedReload()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoading(with: [], at: 1)
         assertThat(sut, isRendering: [])
     }
@@ -121,7 +122,7 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         loader.completeFeedLoadingWithError(at: 0)
         XCTAssertEqual(sut.errorMessage, loadError)
         
-        sut.simulateUserInitiatedFeedReload()
+        sut.simulateUserInitiatedReload()
         XCTAssertEqual(sut.errorMessage, nil)
     }
     
@@ -146,14 +147,14 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         loader.completeFeedLoading(with: [image0], at: 0)
         assertThat(sut, isRendering: [image0])
         
-        sut.simulateUserInitiatedFeedReload()
+        sut.simulateUserInitiatedReload()
         loader.completeFeedLoadingWithError(at: 1)
         assertThat(sut, isRendering: [image0])
     }
   
     // MARK: - Helpers
 
-    override func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
+    private func makeSUTT(file: StaticString = #filePath, line: UInt = #line) -> (sut: ListViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
         let sut = CommentsUIComposer.commentsComposedWith(commentsLoader: loader.loadPublisher)
         trackForMemoryLeaks(loader)
@@ -164,35 +165,29 @@ final class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     private func makeImage(description: String? = nil, location: String? = nil, url: URL = URL(string: "http://any-url.com")!) -> FeedImage {
         return FeedImage(id: UUID(), description: description, location: location, url: url)
     }
-}
-
-private class FakeRefreshControl: UIRefreshControl {
     
-    private var _isRefreshing = false
-    
-    override var isRefreshing: Bool { _isRefreshing }
-    
-    override func beginRefreshing() {
-        _isRefreshing = true
-    }
-    
-    override func endRefreshing() {
-        _isRefreshing = false
-    }
-}
-
-private extension ListViewController {
-    func replaceRefreshControlWithFakeForiOS17Support() {
-        let fake = FakeRefreshControl()
+    private class LoaderSpy {
+        private var requests = [PassthroughSubject<[FeedImage], Error>]()
         
-        refreshControl?.allTargets.forEach({ target in
-            refreshControl?.actions(forTarget: target, forControlEvent: .valueChanged)?.forEach({ action in
-                fake.addTarget(target, action: Selector(action), for: .valueChanged)
-            })
-        })
+        var loadCommentsCallCount: Int {
+            return requests.count
+        }
         
-        refreshControl = fake
+        func loadPublisher() -> AnyPublisher<[FeedImage], Error> {
+            let publisher = PassthroughSubject<[FeedImage], Error>()
+            requests.append(publisher)
+            return publisher.eraseToAnyPublisher()
+        }
+        
+        func completeFeedLoading(with feed: [FeedImage] = [], at index: Int = 0) {
+            requests[index].send(feed)
+        }
+        
+        func completeFeedLoadingWithError(at index: Int = 0) {
+            let error = NSError(domain: "an error", code: 0)
+            requests[index].send(completion: .failure(error))
+        }
     }
 }
-
+    
 
