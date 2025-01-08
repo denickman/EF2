@@ -64,11 +64,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		857A59D72D15916300A4DFFD /* EssentialAppUIAcceptanceTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = EssentialAppUIAcceptanceTests;
-			sourceTree = "<group>";
-		};
 		85C6B4472D11968600D3612E /* EssentialApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -125,7 +120,6 @@
 			children = (
 				85C6B4472D11968600D3612E /* EssentialApp */,
 				85C6B45E2D11968700D3612E /* EssentialAppTests */,
-				857A59D72D15916300A4DFFD /* EssentialAppUIAcceptanceTests */,
 				857A59392D11999100A4DFFD /* Frameworks */,
 				85C6B4462D11968600D3612E /* Products */,
 			);
@@ -156,9 +150,6 @@
 			);
 			dependencies = (
 				857A59DD2D15916300A4DFFD /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				857A59D72D15916300A4DFFD /* EssentialAppUIAcceptanceTests */,
 			);
 			name = EssentialAppUIAcceptanceTests;
 			packageProductDependencies = (
