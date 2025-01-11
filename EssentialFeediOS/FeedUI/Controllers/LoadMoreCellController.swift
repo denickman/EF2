@@ -31,3 +31,11 @@ extension LoadMoreCellController: ResourceLoadingView {
 
 }
 
+extension LoadMoreCellController: ResourceErrorView {
+    public func display(_ viewModel: ResourceErrorViewModel) {
+        cell.message = viewModel.message
+    }
+    
+    
+}
+

@@ -56,6 +56,23 @@ class FeedSnapshotTests: XCTestCase {
         assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
     }
     
+    
+    func test_feedWithLoadMoreError() {
+        // it should show the retry button
+        let sut = makeSUT()
+        sut.display(feedWithLoadMoreError())
+        
+         //record
+//                        record(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_LOAD_MORE_ERROR_light")
+//                        record(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_LOAD_MORE_ERROR_dark")
+//                record(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraExtraExtraLarge)), named: "FEED_WITH_LOAD_MORE_ERROR_light_extraExtraExtraLarge")
+        
+        // assert
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_LOAD_MORE_ERROR_light")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_LOAD_MORE_ERROR_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraExtraExtraLarge)), named: "FEED_WITH_LOAD_MORE_ERROR_light_extraExtraExtraLarge")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> ListViewController {
@@ -93,15 +110,25 @@ class FeedSnapshotTests: XCTestCase {
     }
     
     private func feedWithLoadMoreIndicator() -> [CellController] {
+        let loadMoreCtrl = LoadMoreCellController()
+        loadMoreCtrl.display(ResourceLoadingViewModel(isLoading: true))
+        return feedWithLoadMore(loadMore: loadMoreCtrl)
+    }
+    
+    private func feedWithLoadMoreError() -> [CellController] {
+        let loadMoreCtrl = LoadMoreCellController()
+        loadMoreCtrl.display(ResourceErrorViewModel(message: "This is a multiline\n error message"))
+        return feedWithLoadMore(loadMore: loadMoreCtrl)
+    }
+ 
+    private func feedWithLoadMore(loadMore: LoadMoreCellController) -> [CellController] {
         let stub = feedWithContent().last!
         let cellController = FeedImageCellController(viewModel: stub.viewModel, delegate: stub, selection: {})
         stub.controller = cellController
-        
-        let loadMoreCtrl = LoadMoreCellController()
-        loadMoreCtrl.display(ResourceLoadingViewModel(isLoading: true))
+
         return [
             CellController(id: UUID(), cellController),
-            CellController(id: UUID(), loadMoreCtrl)
+            CellController(id: UUID(), loadMore)
         ]
     }
 }
