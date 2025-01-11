@@ -20,7 +20,7 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     public var onRefresh: (() -> Void)?
     
     private lazy var dataSource: UITableViewDiffableDataSource<Int, CellController> = {
-        .init(tableView: tableView) { tableView, indexPath, ctrl in // return cell
+        .init(tableView: tableView) { tableView, indexPath, ctrl in
             ctrl.dataSource.tableView(tableView, cellForRowAt: indexPath)
         }
     }()
@@ -29,10 +29,20 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        configureTableView()
+        refresh()
+    }
+    
+    private func configureTableView() {
         dataSource.defaultRowAnimation = .left
         tableView.dataSource = dataSource
-        configureErrorView()
-        refresh()
+        tableView.tableHeaderView = errorView.makeContainer()
+
+        errorView.onHide = { [weak self] in
+            self?.tableView.beginUpdates()
+            self?.tableView.sizeTableHeaderToFit()
+            self?.tableView.endUpdates()
+        }
     }
     
     override public func viewDidLayoutSubviews() {
@@ -62,28 +72,6 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         /// Also there are 3 commits that should be implemented for new version of animating
         /// iOS 15 Update #1 iOS 15 Update #2 iOS 15 Update 3 iOS 15 Update 4
         /// https://academy.essentialdeveloper.com/courses/447455/lectures/24569943
-    }
-    
-    private func configureErrorView() {
-        let container = UIView()
-        container.backgroundColor = .clear
-        container.addSubview(errorView)
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            errorView.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 8),
-            errorView.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -8),
-            errorView.topAnchor.constraint(equalTo: container.topAnchor, constant: 8),
-            errorView.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -8),
-        ])
-        
-        tableView.tableHeaderView = container
-        
-        errorView.onHide = { [weak self] in
-            self?.tableView.beginUpdates()
-            self?.tableView.sizeTableHeaderToFit()
-            self?.tableView.endUpdates()
-        }
     }
     
     // MARK: - TableView Delegate

@@ -16,14 +16,14 @@ class FeedSnapshotTests: XCTestCase {
         sut.display(feedWithContent())
         
         // record
-//                record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_CONTENT_light")
-//                record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_CONTENT_dark")
-//        record(snapshot: sut.snapshot(for: .iPhone8(style: .light, contentSize: .extraExtraExtraLarge)), named: "FEED_WITH_CONTENT_light_extraExtraExtraLarge")
+//                record(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_CONTENT_light")
+//                record(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_CONTENT_dark")
+//        record(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraExtraExtraLarge)), named: "FEED_WITH_CONTENT_light_extraExtraExtraLarge")
         
         // assert
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_CONTENT_light")
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_CONTENT_dark")
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light, contentSize: .extraExtraExtraLarge)), named: "FEED_WITH_CONTENT_light_extraExtraExtraLarge")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_CONTENT_light")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_CONTENT_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light, contentSize: .extraExtraExtraLarge)), named: "FEED_WITH_CONTENT_light_extraExtraExtraLarge")
 
     }
     
@@ -33,12 +33,12 @@ class FeedSnapshotTests: XCTestCase {
         sut.display(feedWithFailedImageLoading())
         
         // record
-//                record(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
-//                record(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
+//                record(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
+//                record(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
         
         // assert
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
-        assert(snapshot: sut.snapshot(for: .iPhone8(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
     }
     
     // MARK: - Helpers
@@ -100,30 +100,28 @@ struct SnapshotConfiguration {
     let layoutMargins: UIEdgeInsets
     let traitCollection: UITraitCollection
     
-    static func iPhone8(
-        style: UIUserInterfaceStyle,
-        contentSize: UIContentSizeCategory = .medium
-    ) -> SnapshotConfiguration {
-        SnapshotConfiguration(
-            size: CGSize(width: 375, height: 667),
-            safeAreaInsets: UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0),
-            layoutMargins: UIEdgeInsets(top: 20, left: 16, bottom: 0, right: 16),
-            traitCollection: UITraitCollection(traitsFrom: [
-                .init(forceTouchCapability: .available),
-                .init(layoutDirection: .leftToRight),
-                .init(preferredContentSizeCategory: contentSize),
-                .init(userInterfaceIdiom: .phone),
-                .init(horizontalSizeClass: .compact),
-                .init(verticalSizeClass: .regular),
-                .init(displayScale: 2),
-                .init(displayGamut: .P3),
-                .init(userInterfaceStyle: style)
-            ]))
+    static func iPhone(style: UIUserInterfaceStyle, contentSize: UIContentSizeCategory = .medium) -> SnapshotConfiguration {
+        return SnapshotConfiguration(
+            size: CGSize(width: 390, height: 844),
+            safeAreaInsets: UIEdgeInsets(top: 47, left: 0, bottom: 34, right: 0),
+            layoutMargins: UIEdgeInsets(top: 55, left: 8, bottom: 42, right: 8),
+            traitCollection: UITraitCollection(mutations: { traits in
+                traits.forceTouchCapability = .unavailable
+                traits.layoutDirection = .leftToRight
+                traits.preferredContentSizeCategory = contentSize
+                traits.userInterfaceIdiom = .phone
+                traits.horizontalSizeClass = .compact
+                traits.verticalSizeClass = .regular
+                traits.displayScale = 3
+                traits.accessibilityContrast = .normal
+                traits.displayGamut = .P3
+                traits.userInterfaceStyle = style
+            }))
     }
 }
 
 private final class SnapshotWindow: UIWindow {
-    private var configuration: SnapshotConfiguration = .iPhone8(style: .light)
+    private var configuration: SnapshotConfiguration = .iPhone(style: .light)
     
     convenience init(configuration: SnapshotConfiguration, root: UIViewController) {
         self.init(frame: CGRect(origin: .zero, size: configuration.size))
@@ -135,11 +133,11 @@ private final class SnapshotWindow: UIWindow {
     }
     
     override var safeAreaInsets: UIEdgeInsets {
-        return configuration.safeAreaInsets
+        configuration.safeAreaInsets
     }
     
     override var traitCollection: UITraitCollection {
-        return UITraitCollection(traitsFrom: [super.traitCollection, configuration.traitCollection])
+        configuration.traitCollection
     }
     
     func snapshot() -> UIImage {
@@ -151,10 +149,11 @@ private final class SnapshotWindow: UIWindow {
 }
 
 private extension ListViewController {
+    
     func display(_ stubs: [ImageStub]) {
         // convert image stubs into cell controllers
         let cells: [CellController] = stubs.map { stub in
-            let cellController = FeedImageCellController(viewModel: stub.viewModel, delegate: stub)
+            let cellController = FeedImageCellController(viewModel: stub.viewModel, delegate: stub, selection: {})
             stub.controller = cellController
             return CellController(id: UUID(), cellController)
         }
