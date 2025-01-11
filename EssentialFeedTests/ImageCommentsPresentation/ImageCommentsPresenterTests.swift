@@ -48,8 +48,7 @@ final class ImageCommentsPresenterTests: XCTestCase {
                 message: "another message",
                 date: "1 day ago",
                 username: "another username"
-            ),
-            
+            )
         ])
     }
  

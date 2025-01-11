@@ -37,12 +37,11 @@ public final class CommentsUIComposer {
     private static func makeCommentsViewController(title: String) -> ListViewController {
         let bundle = Bundle(for: ListViewController.self)
         let storyboard = UIStoryboard(name: "ImageComments", bundle: bundle)
-        let feedController = storyboard.instantiateInitialViewController() as! ListViewController
-        feedController.title = title
-        return feedController
+        let commentsController = storyboard.instantiateInitialViewController() as! ListViewController
+        commentsController.title = title
+        return commentsController
     }
 }
-
 
 final class CommentsViewAdapter: ResourceView {
     
@@ -53,12 +52,8 @@ final class CommentsViewAdapter: ResourceView {
     }
     
     func display(_ viewModel: ImageCommentsViewModel) {
-        controller?.display(viewModel.comments.map{ viewModel in
+        controller?.display(viewModel.comments.map { viewModel in
             CellController(id: viewModel, ImageCommentCellController(model: viewModel))
         })
     }
 }
-
-
-//private struct InvalidImageData: Error {}
-

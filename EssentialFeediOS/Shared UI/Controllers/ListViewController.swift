@@ -18,7 +18,6 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
     
     private(set) public var errorView = ErrorView()
     public var onRefresh: (() -> Void)?
-    private var loadingControllers = [IndexPath : CellController]()
     
     private lazy var dataSource: UITableViewDiffableDataSource<Int, CellController> = {
         .init(tableView: tableView) { tableView, indexPath, ctrl in // return cell

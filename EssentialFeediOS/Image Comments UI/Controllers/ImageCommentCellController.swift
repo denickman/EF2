@@ -17,7 +17,7 @@ public class ImageCommentCellController: NSObject {
     }
 }
 
-// MARK: - CellController
+// MARK: - UITableViewDataSource
 
 extension ImageCommentCellController: UITableViewDataSource {
  
