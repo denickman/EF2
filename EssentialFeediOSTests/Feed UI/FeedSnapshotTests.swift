@@ -41,6 +41,21 @@ class FeedSnapshotTests: XCTestCase {
         assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
     }
     
+    
+    func test_feedWithLoadMoreIndicator() {
+        // it should show the retry button
+        let sut = makeSUT()
+        sut.display(feedWithLoadMoreIndicator())
+        
+        // record
+//                record(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_LOAD_MORE_INDICATOR_light")
+//                record(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_LOAD_MORE_INDICATOR_dark")
+        
+        // assert
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .light)), named: "FEED_WITH_FAILED_IMAGE_LOADING_light")
+        assert(snapshot: sut.snapshot(for: .iPhone(style: .dark)), named: "FEED_WITH_FAILED_IMAGE_LOADING_dark")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> ListViewController {
@@ -74,6 +89,19 @@ class FeedSnapshotTests: XCTestCase {
         [
             ImageStub(description: nil, location: "Cannon Street, London", image: nil),
             ImageStub(description: nil, location: "Brighton Seafront", image: nil)
+        ]
+    }
+    
+    private func feedWithLoadMoreIndicator() -> [CellController] {
+        let stub = feedWithContent().last!
+        let cellController = FeedImageCellController(viewModel: stub.viewModel, delegate: stub, selection: {})
+        stub.controller = cellController
+        
+        let loadMoreCtrl = LoadMoreCellController()
+        loadMoreCtrl.display(ResourceLoadingViewModel(isLoading: true))
+        return [
+            CellController(id: UUID(), cellController),
+            CellController(id: UUID(), loadMoreCtrl)
         ]
     }
 }
