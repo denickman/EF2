@@ -26,12 +26,12 @@ final class FeedViewAdapter: ResourceView {
     }
     
     func display(_ viewModel: Paginated<FeedImage>) {
-        controller?.display(viewModel.items.map { model in
-            
+        
+        let feed: [CellController] = viewModel.items.map { model in
             let adapter = LoadResourcePresentationAdapter<Data, WeakRefVirtualProxy<FeedImageCellController>>(loader: { [imageLoader] in
                 imageLoader(model.url)
             })
-
+            
             let view = FeedImageCellController(
                 viewModel: FeedImagePresenter.map(model),
                 delegate: adapter,
@@ -52,9 +52,15 @@ final class FeedViewAdapter: ResourceView {
                 })
             
             return CellController(id: model, view)
-        })
+        }
+        
+        let loadMore = LoadMoreCellController {
+            viewModel.loadMore?({ _ in })
+        }
+        
+        let loadMoreSection = [CellController(id: UUID(), loadMore)] // only 1 row in section 1 for spinner indicator
+        controller?.display(feed, loadMoreSection) // separating in several sections
     }
 }
-
 
 private struct InvalidImageData: Error {}

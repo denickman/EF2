@@ -60,15 +60,20 @@ public final class ListViewController: UITableViewController, UITableViewDataSou
         onRefresh?()
     }
     
-    public func display(_ cellControllers: [CellController]) {
+    public func display(_ sections: [CellController]...) {
+        
         var snapshot = NSDiffableDataSourceSnapshot<Int, CellController>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(cellControllers, toSection: 0)
-        if #available(iOS 15.0, *) {
-            dataSource.applySnapshotUsingReloadData(snapshot)
-        } else {
-            dataSource.apply(snapshot)
+        
+        sections.enumerated().forEach { section, cellControllers in
+            snapshot.appendSections([section])
+            snapshot.appendItems(cellControllers, toSection: section)
         }
+        
+//        if #available(iOS 15.0, *) {
+//            dataSource.applySnapshotUsingReloadData(snapshot)
+//        } else {
+            dataSource.apply(snapshot)
+//        }
         /// Also there are 3 commits that should be implemented for new version of animating
         /// iOS 15 Update #1 iOS 15 Update #2 iOS 15 Update 3 iOS 15 Update 4
         /// https://academy.essentialdeveloper.com/courses/447455/lectures/24569943
