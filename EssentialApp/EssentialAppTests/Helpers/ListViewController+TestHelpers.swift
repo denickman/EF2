@@ -31,6 +31,19 @@ extension ListViewController {
     func simulateErrorViewTap() {
         errorView.simulateTap()
     }
+    
+    func numberOfRows(in section: Int) -> Int {
+        tableView.numberOfSections > section ? tableView.numberOfRows(inSection: section) : 0
+    }
+    
+    func cell(row: Int, section: Int) -> UITableViewCell? {
+        guard numberOfRows(in: section) > row else {
+            return nil
+        }
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: section)
+        return ds?.tableView(tableView, cellForRowAt: index)
+    }
 }
 
 extension ListViewController {
@@ -93,12 +106,12 @@ extension ListViewController {
     }
     
     func simulateLoadMoreFeedAction() {
-             guard let view = cell(row: 0, section: feedLoadMoreSection) else { return }
-
-             let delegate = tableView.delegate
-             let index = IndexPath(row: 0, section: feedLoadMoreSection)
-             delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
-         }
+        guard let view = cell(row: 0, section: feedLoadMoreSection) else { return }
+        
+        let delegate = tableView.delegate
+        let index = IndexPath(row: 0, section: feedLoadMoreSection)
+        delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
+    }
 }
 
 extension ListViewController {
@@ -121,7 +134,7 @@ extension ListViewController {
     func commentUsername(at row: Int) -> String? {
         commentView(at: row)?.usernameLabel?.text
     }
- 
+    
     func commentView(at row: Int) -> ImageCommentCell? {
         guard numberOfRenderedComments() > row else { return nil }
         
@@ -132,14 +145,3 @@ extension ListViewController {
     
 }
 
-
-extension ListViewController {
-    func cell(row: Int, section: Int) -> UITableViewCell? {
-        guard tableView.numberOfSections > section,
-              tableView.numberOfRows(inSection: section) > row else {
-            return nil
-        }
-        let indexPath = IndexPath(row: row, section: section)
-        return tableView.cellForRow(at: indexPath)
-    }
-}
