@@ -35,12 +35,9 @@ extension FeedUIIntegrationTests {
   
         func completeFeedLoading(with feed: [FeedImage] = [], at index: Int = 0) {
             feedRequests[index].send(Paginated(items: feed, loadMorePublisher: { [weak self] in
-            
                 let publisher = PassthroughSubject<Paginated<FeedImage>, Error>()
                 self?.loadMoreRequest.append(publisher)
                 return publisher.eraseToAnyPublisher()
-                
-                
             }))
         }
         

@@ -51,6 +51,10 @@ extension ListViewController {
     private var feedImagesSection: Int { 0 }
     private var feedLoadMoreSection: Int { 1 }
     
+    var isShowingLoadMoreFeedIndicator: Bool {
+        loadMoreFeedCell()?.isLoading == true
+    }
+    
     func numberOfRenderedFeedImageViews() -> Int {
         /// tableView.reloadData does not force an immediate layout update
         /// 'didEndDisplayingCell' will only be called in the next layout cycle
@@ -106,11 +110,15 @@ extension ListViewController {
     }
     
     func simulateLoadMoreFeedAction() {
-        guard let view = cell(row: 0, section: feedLoadMoreSection) else { return }
+        guard let view = loadMoreFeedCell() else { return }
         
         let delegate = tableView.delegate
         let index = IndexPath(row: 0, section: feedLoadMoreSection)
         delegate?.tableView?(tableView, willDisplay: view, forRowAt: index)
+    }
+    
+    private func loadMoreFeedCell() -> LoadMoreCell? {
+        cell(row: 0, section: feedLoadMoreSection) as? LoadMoreCell
     }
 }
 

@@ -54,6 +54,7 @@ class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected yet another loading request once user initiates another reload")
     }
     
+    // TODO: - Check this test
     func test_loadMoreActions_requestMoreFromLoader() {
         let (sut, loader) = makeSUT()
         sut.loadViewIfNeeded()
@@ -80,47 +81,47 @@ class FeedUIIntegrationTests: XCTestCase {
         sut.simulateLoadMoreFeedAction()
         XCTAssertEqual(loader.loadMoreCallCount, 3, "Expected no requests after loading all pages")
     }
-    
-    
-    
+
+    // TODO: - Check this test
+
     func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
-        
-        // https://academy.essentialdeveloper.com/courses/1112681/lectures/50273453
-        
         let (sut, loader) = makeSUT()
+
         sut.loadViewIfNeeded()
-        sut.replaceRefreshControlWithFakeForiOS17Support()
+        XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once view appears")
+
+        loader.completeFeedLoading(at: 0)
+        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once loading completes successfully")
+
+        sut.simulateUserInitiatedReload()
+        XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once user initiates a reload")
+
+        loader.completeFeedLoadingWithError(at: 1)
+        XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once user initiated loading completes with error")
+    }
+    
+    // TODO: - Check this test
+
+    func test_loadMoreIndicator_isVisibleWhileLoadingMore() {
+        let (sut, loader) = makeSUT()
+
+        sut.loadViewIfNeeded()
+        XCTAssertFalse(sut.isShowingLoadMoreFeedIndicator, "Expected no loading indicator once view appears")
+
+        loader.completeFeedLoading(at: 0)
+        XCTAssertFalse(sut.isShowingLoadMoreFeedIndicator, "Expected no loading indicator once loading completes successfully")
+
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertTrue(sut.isShowingLoadMoreFeedIndicator, "Expected loading indicator on load more action")
+
+        loader.completeLoadMore(at: 0)
+        XCTAssertFalse(sut.isShowingLoadMoreFeedIndicator, "Expected no loading indicator once user initiated loading completes successfully")
+ 
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertTrue(sut.isShowingLoadMoreFeedIndicator, "Expected loading indicator on second load more action")
         
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
-        
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
-        sut.refreshControl?.beginRefreshing()
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
-        
-        sut.refreshControl?.sendActions(for: .valueChanged)
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
-        
-        sut.refreshControl?.endRefreshing()
-        sut.beginAppearanceTransition(true, animated: false)
-        sut.endAppearanceTransition()
-        
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, false)
-        
-        let window = UIWindow()
-        window.rootViewController = sut
-        window.makeKeyAndVisible()
-        
-        RunLoop.current.run(until: Date() + 0.3)
-        window.layoutIfNeeded()
-        
-        sut.beginAppearanceTransition(true, animated: false) // viewWillAppear
-        sut.endAppearanceTransition() // viewIsAppearing + viewDidAppear
-        //                XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
-        
-        sut.refreshControl?.endRefreshing()
-        sut.refreshControl?.sendActions(for: .valueChanged)
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+        loader.completeLoadMoreWithError(at: 1)
+        XCTAssertFalse(sut.isShowingLoadMoreFeedIndicator, "Expected no loading indicator once user initiated loading completes with error ")
     }
     
     // Cells
