@@ -15,7 +15,7 @@ extension ListViewController {
     }
     
     var isShowingLoadingIndicator: Bool {
-        return refreshControl?.isRefreshing == true
+        refreshControl?.isRefreshing == true
     }
     
     override public func loadViewIfNeeded() {
@@ -53,6 +53,10 @@ extension ListViewController {
     
     var isShowingLoadMoreFeedIndicator: Bool {
         loadMoreFeedCell()?.isLoading == true
+    }
+    
+    var loadMoreFeedErrorMessage: String? {
+        loadMoreFeedCell()?.message
     }
     
     func numberOfRenderedFeedImageViews() -> Int {
