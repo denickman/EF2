@@ -103,9 +103,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             .map(makePage)
             .delay(for: 2, scheduler: DispatchQueue.main)
-            .flatMap { _ in
-                Fail(error: NSError())
-            }
+//            .flatMap { _ in
+//                Fail(error: NSError())
+//            }
             .caching(to: localFeedLoader)
     }
     
