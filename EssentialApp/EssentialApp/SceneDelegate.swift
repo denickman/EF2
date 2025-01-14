@@ -34,8 +34,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }()
     
     private lazy var store: FeedStore & FeedImageDataStore = {
-        try! CoreDataFeedStore(storeURL: NSPersistentContainer.defaultDirectoryURL().appendingPathComponent("feed-store.squlite")
-        )
+        do {
+            return try CoreDataFeedStore(storeURL: NSPersistentContainer
+                .defaultDirectoryURL()
+                .appendingPathComponent("feed-store.squlite")
+            )
+        } catch {
+            return NullStore()
+        }
     }()
     
     private lazy var localFeedLoader: LocalFeedLoader = {
@@ -101,7 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             .map { (cachedItems, newItems) in
                 (cachedItems + newItems, newItems.last)
             }.map(makePage)
-                    .delay(for: 2, scheduler: DispatchQueue.main)
+            .delay(for: 2, scheduler: DispatchQueue.main)
         //            .flatMap { _ in
         //                Fail(error: NSError())
         //            }

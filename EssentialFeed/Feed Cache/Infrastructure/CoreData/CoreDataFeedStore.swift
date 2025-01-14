@@ -5,7 +5,6 @@
 //  Created by Denis Yaremenko on 23.11.2024.
 //
 
-
 import CoreData
 
 public final class CoreDataFeedStore {
