@@ -14,7 +14,6 @@ public final class FeedUIComposer {
     
     private typealias FeedPresentationAdapter = LoadResourcePresentationAdapter<Paginated<FeedImage>, FeedViewAdapter>
     
-    
     private init() {}
     
     public static func feedComposedWith(

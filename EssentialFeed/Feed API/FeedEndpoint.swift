@@ -19,9 +19,8 @@ public enum FeedEndpoint {
             components.path = baseURL.path + "/v1/feed"
             components.queryItems = [
                 URLQueryItem(name: "limit", value: "10"),
-                image.map { URLQueryItem(name: "after_id", value: $0.id.uuidString) }
+                image.map { URLQueryItem(name: "after_id", value: $0.id.uuidString) },
             ].compactMap { $0 }
-            
             return components.url!
         }
     }

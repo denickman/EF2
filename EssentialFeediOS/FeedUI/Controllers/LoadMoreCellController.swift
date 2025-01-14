@@ -8,9 +8,7 @@
 import UIKit
 import EssentialFeed
 
-
 public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableViewDelegate {
-    
     private let cell = LoadMoreCell()
     private let callback: () -> Void
     private var offsetObserver: NSKeyValueObservation?
@@ -31,11 +29,9 @@ public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableVie
     public func tableView(_ tableView: UITableView, willDisplay: UITableViewCell, forRowAt indexPath: IndexPath) {
         reloadIfNeeded()
         
-        offsetObserver = tableView.observe(\.contentOffset, options: .new)  { [weak self] tableView, _ in
+        offsetObserver = tableView.observe(\.contentOffset, options: .new) { [weak self] (tableView, _) in
             guard tableView.isDragging else { return }
-            
             self?.reloadIfNeeded()
-            
         }
     }
     
@@ -49,24 +45,17 @@ public class LoadMoreCellController: NSObject, UITableViewDataSource, UITableVie
     
     private func reloadIfNeeded() {
         guard !cell.isLoading else { return }
+        
         callback()
     }
-    
 }
 
-extension LoadMoreCellController: ResourceLoadingView {
-    
-    public func display(_ viewModel: ResourceLoadingViewModel) {
-        cell.isLoading = viewModel.isLoading
-    }
-    
-}
-
-extension LoadMoreCellController: ResourceErrorView {
+extension LoadMoreCellController: ResourceLoadingView, ResourceErrorView {
     public func display(_ viewModel: ResourceErrorViewModel) {
         cell.message = viewModel.message
     }
     
-    
+    public func display(_ viewModel: ResourceLoadingViewModel) {
+        cell.isLoading = viewModel.isLoading
+    }
 }
-

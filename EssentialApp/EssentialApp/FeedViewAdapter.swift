@@ -59,21 +59,20 @@ final class FeedViewAdapter: ResourceView {
         
         // if we do not have loadMorePublishers, we just do not have any more sections
         guard let loadMorePublisher = viewModel.loadMorePublisher else {
-            controller?.display(feed)
-            return
-        }
+                     controller?.display(feed)
+                     return
+                 }
         
         // compose a new cell controller
         let loadMoreAdapter = LoadMorePresentationAdapter(loader: loadMorePublisher)
-        let loadMore = LoadMoreCellController(callback: loadMoreAdapter.loadResource)
+                let loadMore = LoadMoreCellController(callback: loadMoreAdapter.loadResource)
         
         loadMoreAdapter.presenter = LoadResourcePresenter(
-            resourceView: self,
-            loadingView: WeakRefVirtualProxy(loadMore),
-            errorView: WeakRefVirtualProxy(loadMore),
-            mapper: { $0 }
-        )
+                     resourceView: self,
+                     loadingView: WeakRefVirtualProxy(loadMore),
+                     errorView: WeakRefVirtualProxy(loadMore))
         
+  
         let loadMoreSection = [CellController(id: UUID(), loadMore)] // only 1 row in section 1 for spinner indicator
         controller?.display(feed, loadMoreSection) // separating in several sections
     }

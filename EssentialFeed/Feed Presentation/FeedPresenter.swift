@@ -18,7 +18,7 @@ public final class FeedPresenter {
         )
     }
     
-    public static func map(_ feed: [FeedImage]) -> FeedViewModel {
-        FeedViewModel(feed: feed)
-    }
+//    public static func map(_ feed: [FeedImage]) -> FeedViewModel {
+//        FeedViewModel(feed: feed)
+//    }
 }
