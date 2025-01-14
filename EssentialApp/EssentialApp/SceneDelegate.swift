@@ -9,8 +9,10 @@ import UIKit
 import EssentialFeed
 import CoreData
 import Combine
+import os
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+    
     
     // MARK: - Properties
     
@@ -41,6 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             )
         } catch {
             assertionFailure("Failed to instantiate CoreData store with error: \(error.localizedDescription)")
+            logger.fault("Failed to instantiate CoreData store with error: \(error.localizedDescription)")
             return NullStore()
         }
     }()
@@ -48,6 +51,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private lazy var localFeedLoader: LocalFeedLoader = {
         LocalFeedLoader(store: store, currentDate: Date.init)
     }()
+    
+    private lazy var logger = Logger.init(subsystem: "your bundle ID here", category: "main")
+
     
     // MARK: - Init
     
