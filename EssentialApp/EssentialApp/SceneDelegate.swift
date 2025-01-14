@@ -40,6 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 .appendingPathComponent("feed-store.squlite")
             )
         } catch {
+            assertionFailure("Failed to instantiate CoreData store with error: \(error.localizedDescription)")
             return NullStore()
         }
     }()
