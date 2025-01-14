@@ -96,6 +96,10 @@ extension ListViewController {
         return feedImageView(at: index) as? FeedImageCell
     }
     
+    var canLoadMoreFeed: Bool {
+        loadMoreFeedCell() != nil
+    }
+    
     @discardableResult
     func simulateFeedImageViewNotVisible(at row: Int) -> FeedImageCell? {
         let view = simulateFeedImageViewVisible(at: row)
