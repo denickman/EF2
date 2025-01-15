@@ -21,6 +21,7 @@ public final class FeedImageCellController: NSObject {
     private let delegate: FeedImageCellControllerDelegate
     private var cell: FeedImageCell?
     private let selection: () -> Void
+    private var isLoading = false
     
     public init(
         viewModel: FeedImageViewModel,
@@ -48,18 +49,17 @@ public final class FeedImageCellController: NSObject {
         delegate.didRequestImage()
         return cell!
     }
-
+    
     private func cancelLoad() {
         releaseCellForReuse()
         delegate.didCancelImageRequest()
     }
-
+    
     private func releaseCellForReuse() {
         cell = nil
     }
     
 }
-
 
 // MARK: - CellController
 
@@ -79,23 +79,27 @@ extension FeedImageCellController: UITableViewDataSource, UITableViewDelegate, U
             self?.delegate.didRequestImage()
         }
         
+        delegate.didRequestImage()
+        
+        
         /// accessibilityIdentifier 'feed-image-cell' for EssentialAppUIAcceptanceTests
         cell?.accessibilityIdentifier = "feed-image-cell"
         /// accessibilityIdentifier 'feed-image' for EssentialAppUIAcceptanceTests
         cell?.feedImageView.accessibilityIdentifier = "feed-image"
         
-        delegate.didRequestImage()
         return cell!
     }
     
     // this method will be called only when cell is going to be rendered on visible screen
     // if you do not have a good estimated cell size you can add logic to this method
-//    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        delegate.didRequestImage()
-//    }
+    //    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    //        delegate.didRequestImage()
+    //    }
     
     public func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        
         delegate.didRequestImage()
+        
     }
     
     public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -130,5 +134,5 @@ extension FeedImageCellController: ResourceView, ResourceLoadingView, ResourceEr
     public func display(_ viewModel: ResourceErrorViewModel) {
         cell?.feedImageRetryButton.isHidden = viewModel.message == nil
     }
-
+    
 }
