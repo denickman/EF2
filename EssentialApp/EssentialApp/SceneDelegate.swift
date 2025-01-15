@@ -52,8 +52,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         LocalFeedLoader(store: store, currentDate: Date.init)
     }()
     
-    private lazy var logger = Logger.init(subsystem: "your bundle ID here", category: "main")
-
+    private lazy var logger = Logger(subsystem: "your bundle ID here", category: "main")
+    
     
     // MARK: - Init
     
@@ -141,16 +141,83 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeLocalImageLoaderWithRemoteFallback(url: URL) -> FeedImageDataLoader.Publisher {
-        let remoteImageLoader = RemoteFeedImageDataLoader(client: httpClient)
+        //        let client = HTTPClientProfilingDecorator(decoratee: httpClient, logger: logger)
         let localImageLoader = LocalFeedImageDataLoader(store: store)
         
         return localImageLoader
             .loadImageDataPublisher(from: url)
-        //            .delay(for: 2, scheduler: DispatchQueue.main)
-            .fallback(to: {
-                remoteImageLoader
-                    .loadImageDataPublisher(from: url)
+            .logCacheMisses(url: url, logger: logger)
+            .fallback(to: { [httpClient, logger] in
+                var startTime = CACurrentMediaTime()
+                return httpClient
+                    .getPublisher(url: url)
+                    .logErrors(url: url, logger: logger)
+                    .logElapsedTime(url: url, logger: logger)
+                    .tryMap(FeedImageDataMapper.map)
                     .caching(to: localImageLoader, using: url)
             })
+    }
+}
+
+
+// do not need this logger is we use a combine approach
+private class HTTPClientProfilingDecorator: HTTPClient {
+    
+    private let decoratee: HTTPClient
+    private let logger: Logger
+    
+    init(decoratee: HTTPClient, logger: Logger) {
+        self.decoratee = decoratee
+        self.logger = logger
+    }
+    
+    func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> any EssentialFeed.HTTPClientTask {
+        logger.trace("Start loading url: \(url)")
+        
+        let startTime = CACurrentMediaTime()
+        
+        return decoratee.get(from: url) { [logger] result in
+            if case let .failure(error) = result {
+                logger.trace("Failed to load url: \(url) with error: \(error.localizedDescription)")
+            }
+            
+            let elapsed = CACurrentMediaTime() - startTime
+            logger.trace("Finish loading url: \(url) in \(elapsed) seconds")
+            completion(result)
+        }
+    }
+}
+
+extension Publisher {
+    
+    func logCacheMisses(url: URL, logger: Logger) -> AnyPublisher<Output, Failure> {
+        return handleEvents(receiveCompletion: { result in
+            if case .failure = result {
+                logger.trace("Cache missed for url: \(url)")
+            }
+        })
+        .eraseToAnyPublisher()
+    }
+    
+    func logElapsedTime(url: URL, logger: Logger) -> AnyPublisher<Output, Failure> {
+        var startTime = CACurrentMediaTime()
+
+        return handleEvents(receiveSubscription: {  _ in
+            logger.trace("Started loading url: \(url)")
+            startTime = CACurrentMediaTime()
+        }, receiveCompletion: { result in
+            let elapsed = CACurrentMediaTime() - startTime
+            logger.trace("Finish loading url: \(url) in \(elapsed) seconds")
+        })
+        .eraseToAnyPublisher()
+    }
+    
+    func logErrors(url: URL, logger: Logger) -> AnyPublisher<Output, Failure> {
+        return handleEvents(receiveCompletion: { result in
+            if case let .failure(error) = result {
+                logger.trace("Failed to load url: \(url) with error: \(error.localizedDescription)")
+            }
+        })
+        .eraseToAnyPublisher()
     }
 }
