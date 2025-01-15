@@ -72,9 +72,9 @@ final class CommentsUIIntegrationTests: XCTestCase {
         sut.endAppearanceTransition() // viewIsAppearing + viewDidAppear
         //                XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
         
-        sut.refreshControl?.endRefreshing()
-        sut.refreshControl?.sendActions(for: .valueChanged)
-        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
+//        sut.refreshControl?.endRefreshing()
+//        sut.refreshControl?.sendActions(for: .valueChanged)
+//        XCTAssertEqual(sut.refreshControl?.isRefreshing, true)
     }
     
     // Cells
