@@ -11,17 +11,18 @@ import Combine
 public protocol FeedImageDataStore {
     typealias RetrievalResult = Swift.Result<Data?, Error>
     typealias InsertionResult = Swift.Result<Void, Error>
-    
-    func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void)
-    func retrieve(dataForURL url: URL, completion: @escaping (RetrievalResult) -> Void)
-    
-    // sync api
-    /// @available(iOS 15.0, deprecated: 1.0, message: "Use new insert method instead.")
 
+    /// @available(iOS 15.0, deprecated: 1.0, message: "Use new insert method instead.")
+   
     @available(*, deprecated)
-    func insert(_ data: Data, for url: URL) throws
+    func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void)
     
     @available(*, deprecated)
+    func retrieve(dataForURL url: URL, completion: @escaping (RetrievalResult) -> Void)
+
+    // sync api
+
+    func insert(_ data: Data, for url: URL) throws
     func retrieve(dataForURL url: URL) throws -> Data?
 }
 
