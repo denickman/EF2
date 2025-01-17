@@ -9,6 +9,8 @@ import Foundation
 import Combine
 
 public protocol FeedImageDataStore {
+    
+    /*
     typealias RetrievalResult = Swift.Result<Data?, Error>
     typealias InsertionResult = Swift.Result<Void, Error>
 
@@ -19,7 +21,8 @@ public protocol FeedImageDataStore {
     
     @available(*, deprecated)
     func retrieve(dataForURL url: URL, completion: @escaping (RetrievalResult) -> Void)
-
+*/
+    
     // sync api
 
     func insert(_ data: Data, for url: URL) throws
@@ -27,6 +30,7 @@ public protocol FeedImageDataStore {
 }
 
 
+/*
 public extension FeedImageDataStore {
     
     func insert(_ data: Data, for url: URL) throws {
@@ -62,3 +66,4 @@ public extension FeedImageDataStore {
     func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {}
     func retrieve(dataForURL url: URL, completion: @escaping (RetrievalResult) -> Void) {}
 }
+*/
