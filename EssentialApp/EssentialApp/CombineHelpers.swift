@@ -193,3 +193,59 @@ extension DispatchQueue {
         
     }
 }
+
+struct AnyScheduler<SchedulerTimeType: Strideable, SchedulerOptions>: Scheduler where SchedulerTimeType.Stride : SchedulerTimeIntervalConvertible {
+
+    private let _now: () -> SchedulerTimeType
+    private let _minimumTolerance: () -> SchedulerTimeType.Stride
+    private let _schedule: (SchedulerOptions?, @escaping () -> Void) -> Void
+    private let _schedulerAfter: (SchedulerTimeType, SchedulerTimeType.Stride, SchedulerOptions?, @escaping () -> Void) -> Void
+    private let _schedulerAfterInterval: (SchedulerTimeType, SchedulerTimeType.Stride, SchedulerTimeType.Stride, SchedulerOptions?, @escaping () -> Void) -> Cancellable
+
+
+    var now: SchedulerTimeType {
+        _now()
+    }
+    
+    var minimumTolerance: SchedulerTimeType.Stride {
+        _minimumTolerance()
+    }
+    
+    init<S>(_ scheduler: S) where SchedulerTimeType == S.SchedulerTimeType,
+    SchedulerOptions == S.SchedulerOptions, S: Scheduler {
+        _now = { scheduler.now }
+        _minimumTolerance = { scheduler.minimumTolerance }
+        _schedule = scheduler.schedule(options:_:)
+        _schedulerAfter = scheduler.schedule(after:tolerance:options:_:)
+        _schedulerAfterInterval = scheduler.schedule(after:interval:tolerance:options:_:)
+    }
+    
+    func schedule(options: SchedulerOptions?, _ action: @escaping () -> Void) {
+        _schedule(options, action)
+    }
+    
+    func schedule(after date: SchedulerTimeType, tolerance: SchedulerTimeType.Stride, options: SchedulerOptions?, _ action: @escaping () -> Void) {
+        _schedulerAfter(date, tolerance, options, action)
+    }
+    
+    func schedule(after date: SchedulerTimeType, interval: SchedulerTimeType.Stride, tolerance: SchedulerTimeType.Stride, options: SchedulerOptions?, _ action: @escaping () -> Void) -> any Cancellable {
+        _schedulerAfterInterval(date, interval, tolerance, options, action)
+    }
+}
+
+typealias AnyDispatchQueueScheduler = AnyScheduler<DispatchQueue.SchedulerTimeType, DispatchQueue.SchedulerOptions>
+
+
+extension AnyDispatchQueueScheduler {
+    static var immediateOnMainQueue: Self {
+        DispatchQueue.immediateWhenOnMainQueueScheduler.eraseToAnyScheduler()
+    }
+}
+
+extension Scheduler {
+    func eraseToAnyScheduler() -> AnyScheduler<SchedulerTimeType, SchedulerOptions> {
+        AnyScheduler(self)
+    }
+}
+
+

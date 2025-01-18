@@ -13,10 +13,16 @@ import os
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
-    
     // MARK: - Properties
     
     var window: UIWindow?
+    
+    private lazy var scheduler: AnyDispatchQueueScheduler = DispatchQueue(
+        label: "com.essentialfeed.infra.queue",
+        qos: .userInitiated,
+        attributes: .concurrent
+    ).eraseToAnyScheduler()
+    
     
     private lazy var navigationController = UINavigationController(
         rootViewController: FeedUIComposer.feedComposedWith(
@@ -57,10 +63,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // MARK: - Init
     
-    convenience init(httpClient: HTTPClient, store: FeedStore & FeedImageDataStore) {
+    convenience init(
+        httpClient: HTTPClient,
+        store: FeedStore & FeedImageDataStore,
+        scheduler: AnyDispatchQueueScheduler
+    ) {
         self.init()
         self.httpClient = httpClient
         self.store = store
+        self.scheduler = scheduler
     }
     
     // MARK: - Lifecycle
@@ -141,21 +152,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func makeLocalImageLoaderWithRemoteFallback(url: URL) -> FeedImageDataLoader.Publisher {
-        //        let client = HTTPClientProfilingDecorator(decoratee: httpClient, logger: logger)
         let localImageLoader = LocalFeedImageDataLoader(store: store)
         
         return localImageLoader
             .loadImageDataPublisher(from: url)
             .logCacheMisses(url: url, logger: logger)
-            .fallback(to: { [httpClient, logger] in
-                var startTime = CACurrentMediaTime()
+            .fallback(to: { [httpClient, logger, scheduler] in
                 return httpClient
                     .getPublisher(url: url)
                     .logErrors(url: url, logger: logger)
                     .logElapsedTime(url: url, logger: logger)
                     .tryMap(FeedImageDataMapper.map)
                     .caching(to: localImageLoader, using: url)
+                    .subscribe(on: scheduler)
+                    .eraseToAnyPublisher()
             })
+            .subscribe(on: scheduler)
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
     }
 }
 

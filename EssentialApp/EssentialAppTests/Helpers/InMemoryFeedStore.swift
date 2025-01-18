@@ -40,7 +40,7 @@ extension InMemoryFeedStore: FeedImageDataStore {
     }
     
     func retrieve(dataForURL url: URL) throws -> Data? {
-       feedImageDataCache[url])
+       feedImageDataCache[url]
     }
 }
 
