@@ -4,7 +4,8 @@ name: CI-iOS
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
-  pull_request:
+  #pull_request:
+  push:
     branches: [ main ]
   # 
   # push:
@@ -21,6 +22,12 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v4
+    
+    - name: Select Xcode
+        run: |
+#          sudo xcode-select -s /Applications/Xcode.app
+          xcode-select -p
+          xcodebuild -version
 
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode_16.0.app
